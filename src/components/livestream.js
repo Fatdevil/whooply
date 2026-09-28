@@ -270,7 +270,7 @@ export async function openLiveStreamModal({
             text-overflow: ellipsis;
             white-space: nowrap;
           ">
-            ${escapeHtml(tournamentName || (isStandalone ? 'Spontan-Live ⚡' : 'BetPals Live'))}
+            ${escapeHtml(tournamentName || (isStandalone ? 'Spontan-Live ⚡' : 'Whooply Live'))}
           </span>
         </div>
 
@@ -573,7 +573,7 @@ export async function openLiveStreamModal({
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'x-user-token': localStorage.getItem('betpals_token') || ''
+                'x-user-token': localStorage.getItem('whooply_token') || ''
               }
             }).then(res => {
               // The server no longer knows this stream (ended, or the server restarted): stop the camera
@@ -1155,7 +1155,7 @@ function renderMockActiveBlixtBet({
                       ${escapeHtml(d.winnerAvatar || '🏆')} <strong>${escapeHtml(d.winnerName)}</strong>: ${formatCurrency(d.amount)}
                     </span>
                     ${d.winnerSwish ? `
-                      <a href="${createSwishUrl({ phone: d.winnerSwish, amount: d.amount, message: 'BetPals Live - ' + title })}" target="_blank" class="btn btn-xs btn-primary" style="font-weight: 800; padding: 3px 8px; font-size: 0.75rem;">
+                      <a href="${createSwishUrl({ phone: d.winnerSwish, amount: d.amount, message: 'Whooply Live - ' + title })}" target="_blank" class="btn btn-xs btn-primary" style="font-weight: 800; padding: 3px 8px; font-size: 0.75rem;">
                         📱 Swisha
                       </a>
                     ` : `
@@ -1165,7 +1165,7 @@ function renderMockActiveBlixtBet({
                 `).join('')}
               </div>
             ` : `
-              <a href="${createSwishUrl({ amount: stakeAmount, message: 'BetPals Live - ' + title })}" target="_blank" class="btn btn-sm btn-primary" style="font-weight: 800; display: inline-flex; align-items: center; gap: 4px;">
+              <a href="${createSwishUrl({ amount: stakeAmount, message: 'Whooply Live - ' + title })}" target="_blank" class="btn btn-sm btn-primary" style="font-weight: 800; display: inline-flex; align-items: center; gap: 4px;">
                 📱 Swisha ${stakeAmount} kr
               </a>
             `}

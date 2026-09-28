@@ -52,7 +52,7 @@ test('Malta Support Push — Generates witty fallback messages for all game even
     assert.ok(res.title.includes('Malta Support'), `Title should mention Malta Support for ${type}`);
     assert.ok(res.body, `Missing body for ${type}`);
     assert.ok(res.url, `Missing url for ${type}`);
-    assert.equal(res.body.toLowerCase().includes('betpals'), false, 'Should never mention BetPals');
+    assert.equal(res.body.toLowerCase().includes('betpals'), false, 'Should never mention Whooply');
   }
 });
 

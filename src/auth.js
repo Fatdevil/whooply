@@ -1,8 +1,8 @@
 // ── Auth Store ──────────────────────────────────────
 // Simple user state management using localStorage
 
-const STORAGE_KEY = 'betpals_token';
-const USER_KEY = 'betpals_user';
+const STORAGE_KEY = 'whooply_token';
+const USER_KEY = 'whooply_user';
 
 export function getStoredUser() {
   try {

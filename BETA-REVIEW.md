@@ -1,4 +1,4 @@
-# BetPals / Malta Betting – Granskning inför beta (20 användare)
+# Whooply / Whooply – Granskning inför beta (20 användare)
 
 **Datum:** 2026-09-24  
 **Omfattning:** Hela serverlogiken (`server/server.js`, `server/db.js`) med fokus på pengaflöden, behörigheter och avräkning, plus stickprov i frontend (XSS).  
@@ -130,7 +130,7 @@ Det här gör även tävlingssynligheten "Endast vänner" verkningslös: vem som
 
 ## Checklista före utskick
 
-1. [ ] Sätt `ADMIN_PIN` (och helst en längre hemlighet), `BETPALS_INVITE_CODE`, Cloudinary och en persistent volym i Railway.
+1. [ ] Sätt `ADMIN_PIN` (och helst en längre hemlighet), `WHOOPLY_INVITE_CODE`, Cloudinary och en persistent volym i Railway.
 2. [ ] Punkt 1–6 ovan.
 3. [ ] Punkt 7–13, eller stäng av Space Blitz och Blind 10 **med insats** i betan (sätt insats = 0).
 4. [ ] Lägg till en "rapportera fel/tvist"-knapp och säg till testarna att **inga riktiga pengar** ska swishas under första veckan.

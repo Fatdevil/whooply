@@ -73,7 +73,7 @@ export async function renderTournament(params = {}) {
             <p class="text-secondary" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px;">
               ${isFof 
                 ? `Detta event är öppet för <strong>${creatorName}</strong> och dennes vänner samt deras vänner.`
-                : `Detta event är endast öppet för personer som är vän med <strong>${creatorName}</strong> i Malta Betting.`
+                : `Detta event är endast öppet för personer som är vän med <strong>${creatorName}</strong> i Whooply.`
               }
             </p>
             ${currentUser ? `
@@ -129,7 +129,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
   // Reload with the code this page was opened with (a share code or the event's id)
   const reloadHere = () => renderTournament({ code: new URL(window.location.href).searchParams.get('code') || t.shareCode });
   const user = getStoredUser();
-  const hasPinSession = !!sessionStorage.getItem('betpals_pin');
+  const hasPinSession = !!sessionStorage.getItem('whooply_pin');
   const isCreator = (user && t.creatorId === user.id) || hasPinSession;
   const allEvents = [...(t.rounds || []), ...(t.sideBets || [])];
   const allResolved = allEvents.length > 0 && allEvents.every(r => r.status === 'finished' || r.status === 'cancelled');
@@ -570,7 +570,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
       if (!confirm(`Ta bort ${btn.dataset.name} från ${t.name}?`)) return;
       btn.disabled = true;
       try {
-        await removeTournamentParticipant(t.id, btn.dataset.remove, sessionStorage.getItem('betpals_pin') || '');
+        await removeTournamentParticipant(t.id, btn.dataset.remove, sessionStorage.getItem('whooply_pin') || '');
         closeModal();
         showToast(`${btn.dataset.name} är borttagen från eventet`, 'success');
         await refreshAfterGameAction();
@@ -781,7 +781,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
       ev.stopPropagation();
       if (!confirm('Radera bilden permanent?')) return;
       try {
-        const pin = sessionStorage.getItem('betpals_pin') || '';
+        const pin = sessionStorage.getItem('whooply_pin') || '';
         await deleteTournamentPhoto(t.id, btn.dataset.id, { pin });
         showToast('Bild borttagen', 'success');
         reloadHere();
@@ -898,7 +898,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
       submitBtn.textContent = 'Laddar upp...';
 
       try {
-        const pin = sessionStorage.getItem('betpals_pin') || '';
+        const pin = sessionStorage.getItem('whooply_pin') || '';
         await addTournamentBanner(t.id, {
           imageData: selectedImageData,
           label: document.getElementById('banner-label').value.trim() || null,
@@ -937,7 +937,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
       ev.stopPropagation();
       if (!confirm('Ta bort denna sponsor?')) return;
       try {
-        const pin = sessionStorage.getItem('betpals_pin') || '';
+        const pin = sessionStorage.getItem('whooply_pin') || '';
         await deleteTournamentBanner(t.id, btn.dataset.bannerId, { pin });
         showToast('Sponsor borttagen', 'success');
         const updated = await getTournament(t.shareCode);
@@ -976,7 +976,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
     btn.addEventListener('click', async () => {
       btn.disabled = true;
       try {
-        const pin = sessionStorage.getItem('betpals_pin') || '';
+        const pin = sessionStorage.getItem('whooply_pin') || '';
         await toggleSettlementReceipt(t.id, {
           fromName: btn.dataset.from,
           toName: btn.dataset.to,
@@ -1004,7 +1004,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
     }
     if (!confirm(`Vill du avsluta eventet "${t.name}" och fastställa slutresultatet?`)) return;
     try {
-      const pin = sessionStorage.getItem('betpals_pin') || '';
+      const pin = sessionStorage.getItem('whooply_pin') || '';
       await settleTournament(t.id, { pin });
       launchConfetti();
       showToast('Eventet är avslutat! 🏆', 'success');
@@ -1019,7 +1019,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
   document.getElementById('reopen-tournament-btn')?.addEventListener('click', async () => {
     if (!confirm(`Vill du återöppna eventet "${t.name}"? Resultat och spel blir då redigerbara igen.`)) return;
     try {
-      const pin = sessionStorage.getItem('betpals_pin') || '';
+      const pin = sessionStorage.getItem('whooply_pin') || '';
       await reopenTournament(t.id, { pin });
       showToast('Eventet har återöppnats! 🔓', 'success');
       const updated = await getTournament(t.shareCode);
@@ -1038,7 +1038,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
   async function deleteWholeEvent() {
     if (!confirm(`Är du säker på att du vill radera hela eventet "${t.name}" och alla dess spel? Detta kan INTE ångras!`)) return;
     try {
-      const pin = sessionStorage.getItem('betpals_pin') || '';
+      const pin = sessionStorage.getItem('whooply_pin') || '';
       await deleteTournament(t.id, { pin });
       showToast('Eventet har raderats', 'success');
       navigate('home');
@@ -1078,25 +1078,25 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
     },
     lock: async (id, name) => {
       if (!confirm(`Vill du stänga bettningen för "${name}" nu? Inga fler bets kommer tas emot.`)) return;
-      await lockEvent(id, sessionStorage.getItem('betpals_pin') || '');
+      await lockEvent(id, sessionStorage.getItem('whooply_pin') || '');
       showToast('Bettning stängd! 🔒', 'info');
       await refreshAfterGameAction();
     },
     reopen: async (id, name) => {
       if (!confirm(`Vill du öppna bettningen för "${name}" igen?`)) return;
-      const reopenRes = await reopenEvent(id, sessionStorage.getItem('betpals_pin') || '');
+      const reopenRes = await reopenEvent(id, sessionStorage.getItem('whooply_pin') || '');
       showToast(reopenRes?.status === 'locked' ? reopenRes.message : 'Bettningen är öppen igen! 🔓', reopenRes?.status === 'locked' ? 'info' : 'success');
       await refreshAfterGameAction();
     },
     cancel: async (id, name) => {
       if (!confirm(`Avbryta "${name}"?\n\nSpelet räknas inte och alla insatser går tillbaka. Det kan inte ångras.`)) return;
-      await cancelEvent(id, sessionStorage.getItem('betpals_pin') || '');
+      await cancelEvent(id, sessionStorage.getItem('whooply_pin') || '');
       showToast('Spelet avbröts – insatserna gick tillbaka', 'success');
       await refreshAfterGameAction();
     },
     remove: async (id, name) => {
       if (!confirm(`Ta bort "${name}"? Ingen har bettat än.`)) return;
-      await deleteEvent(id, sessionStorage.getItem('betpals_pin') || '');
+      await deleteEvent(id, sessionStorage.getItem('whooply_pin') || '');
       showToast('Spelet togs bort', 'success');
       await refreshAfterGameAction();
     }
@@ -1144,7 +1144,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
       `📱 ATT SWISHA:`,
       ...t.settlement.transfers.map(tr => `• ${tr.from} swishar ${tr.amount} kr till ${tr.to} ${tr.isPaid ? '(Betald ✅)' : ''}`),
       ``,
-      `Spelat via BetPals 🎲`
+      `Spelat via Whooply 🎲`
     ];
     navigator.clipboard.writeText(lines.join('\n'));
     showToast('Slutresultat kopierat till urklipp! 📋', 'success');
@@ -1155,7 +1155,7 @@ function renderTournamentContent(content, t, photos = [], tournamentFlashBets = 
     try {
       const baseUrl = getAppBaseUrl();
       const { qr, url } = await getTournamentQR(t.shareCode, baseUrl);
-      const shareMsg = `🏆 Häng med på eventet ${t.name} i BetPals! Se ställningen och betta här: ${url}`;
+      const shareMsg = `🏆 Häng med på eventet ${t.name} i Whooply! Se ställningen och betta här: ${url}`;
       showModal('📱 Dela event', `
         <div class="text-center">
           <img src="${qr}" alt="QR-kod" style="width: 200px; height: 200px; border-radius: var(--radius-md); margin-bottom: var(--space-md);" />
@@ -1777,7 +1777,7 @@ function showAddGameModal(t, content, photos = [], tournamentFlashBets = []) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Skapar...';
     try {
-      const pin = sessionStorage.getItem('betpals_pin') || '';
+      const pin = sessionStorage.getItem('whooply_pin') || '';
       let players = g.players;
       // Friends picked here join the event first, so their bets are linked to their accounts
       // In a pick game the names are what you pick (e.g. runners), not players to invite

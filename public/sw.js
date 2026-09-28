@@ -1,4 +1,4 @@
-const CACHE_NAME = 'betpals-v15';
+const CACHE_NAME = 'whooply-v15';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -95,11 +95,11 @@ self.addEventListener('push', (event) => {
     try {
       data = event.data.json();
     } catch {
-      data = { title: 'Malta Betting 🇲🇹', body: event.data.text() };
+      data = { title: 'Whooply 🇲🇹', body: event.data.text() };
     }
   }
 
-  const title = data.title || 'Malta Betting 🇲🇹';
+  const title = data.title || 'Whooply 🇲🇹';
   const options = {
     body: data.body || 'Ett nytt BlixtBet har startats!',
     icon: '/icons/icon-192.png',

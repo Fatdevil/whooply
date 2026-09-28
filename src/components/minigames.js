@@ -193,12 +193,12 @@ function playUfoSound() {
 
 // ── Virtual Arcade Chips ────────────────────────────────
 function getChips() {
-  const saved = localStorage.getItem('betpals_arcade_chips');
+  const saved = localStorage.getItem('whooply_arcade_chips');
   return saved !== null ? parseInt(saved, 10) : 100;
 }
 
 function setChips(amount) {
-  localStorage.setItem('betpals_arcade_chips', String(Math.max(0, amount)));
+  localStorage.setItem('whooply_arcade_chips', String(Math.max(0, amount)));
   window.dispatchEvent(new CustomEvent('chips-updated', { detail: { chips: amount } }));
 }
 
@@ -640,14 +640,14 @@ function openCoinFlipModal() {
 // ────────────────────────────────────────────────────────
 function openSlotsModal() {
   const isEn = getLang() === 'en';
-  const symbols = ['🍒', '🍋', '🍺', '🔔', '💎', '7️⃣', 'MALTA'];
+  const symbols = ['🍒', '🍋', '🍺', '🔔', '💎', '7️⃣', 'WHOOPLY'];
   let currentChips = getChips();
   let currentBet = 10;
   let isSpinning = false;
 
   function formatSymbol(symbol) {
-    if (symbol === 'MALTA') {
-      return `<img src="/chip-malta.png" alt="Malta Betting" class="slot-chip-img" />`;
+    if (symbol === 'WHOOPLY') {
+      return `<img src="/chip-malta.png" alt="Whooply" class="slot-chip-img" />`;
     }
     return symbol;
   }
@@ -670,9 +670,9 @@ function openSlotsModal() {
       <!-- Slots Cabinet -->
       <div class="slots-cabinet mb-md">
         <div class="slots-window">
-          <div class="slot-reel" id="reel-1"><div class="slot-symbol-wrap">${formatSymbol('MALTA')}</div></div>
+          <div class="slot-reel" id="reel-1"><div class="slot-symbol-wrap">${formatSymbol('WHOOPLY')}</div></div>
           <div class="slot-reel" id="reel-2"><div class="slot-symbol-wrap">7️⃣</div></div>
-          <div class="slot-reel" id="reel-3"><div class="slot-symbol-wrap">${formatSymbol('MALTA')}</div></div>
+          <div class="slot-reel" id="reel-3"><div class="slot-symbol-wrap">${formatSymbol('WHOOPLY')}</div></div>
         </div>
       </div>
 
@@ -809,11 +809,11 @@ function openSlotsModal() {
     let winMessage = '';
 
     if (s1 === s2 && s2 === s3) {
-      if (s1 === 'MALTA') {
+      if (s1 === 'WHOOPLY') {
         multiplier = 50;
         winMessage = isEn 
-          ? `🔥 MALTA BETTING MEGA JACKPOT! +${currentBet * multiplier} CHIPS! 🔥`
-          : `🔥 MALTA BETTING MEGA JACKPOT! +${currentBet * multiplier} MARKER! 🔥`;
+          ? `🔥 WHOOPLY MEGA JACKPOT! +${currentBet * multiplier} CHIPS! 🔥`
+          : `🔥 WHOOPLY MEGA JACKPOT! +${currentBet * multiplier} MARKER! 🔥`;
       } else if (s1 === '7️⃣') {
         multiplier = 30;
         winMessage = isEn
@@ -827,8 +827,8 @@ function openSlotsModal() {
       }
     } else if (s1 === s2 || s2 === s3 || s1 === s3) {
       const match = (s1 === s2) ? s1 : (s2 === s3 ? s2 : s1);
-      multiplier = (match === 'MALTA') ? 5 : 3;
-      const matchLabel = match === 'MALTA' ? (isEn ? 'Malta chips' : 'Malta-chips') : match;
+      multiplier = (match === 'WHOOPLY') ? 5 : 3;
+      const matchLabel = match === 'WHOOPLY' ? (isEn ? 'Whooply chips' : 'Whooply-chips') : match;
       winMessage = isEn
         ? `✨ Pair of ${matchLabel}! Won +${currentBet * multiplier} chips!`
         : `✨ Par i ${matchLabel}! Vinst +${currentBet * multiplier} marker!`;
@@ -869,7 +869,7 @@ function openWheelModal() {
 
   function getSavedParticipants() {
     try {
-      const raw = localStorage.getItem('betpals_wheel_participants');
+      const raw = localStorage.getItem('whooply_wheel_participants');
       if (!raw) return null;
       const parsed = JSON.parse(raw);
       return Array.isArray(parsed) ? parsed.filter(Boolean) : null;
@@ -880,12 +880,12 @@ function openWheelModal() {
 
   function saveParticipants(list) {
     try {
-      localStorage.setItem('betpals_wheel_participants', JSON.stringify(list || []));
+      localStorage.setItem('whooply_wheel_participants', JSON.stringify(list || []));
     } catch {}
   }
 
   let savedMode = null;
-  try { savedMode = localStorage.getItem('betpals_wheel_mode'); } catch {}
+  try { savedMode = localStorage.getItem('whooply_wheel_mode'); } catch {}
   let activePresetKey = (savedMode === 'beer' || savedMode === 'choice') ? savedMode : 'tab';
   let participants = getSavedParticipants() || [];
   let rotation = 0;         // radians, drawn straight onto the canvas
@@ -1199,7 +1199,7 @@ function openWheelModal() {
       const key = pill.dataset.preset;
       if (key === activePresetKey) return;
       activePresetKey = key;
-      try { localStorage.setItem('betpals_wheel_mode', key); } catch {}
+      try { localStorage.setItem('whooply_wheel_mode', key); } catch {}
       presetsContainer.querySelectorAll('.wheel-preset-pill').forEach(p => p.classList.toggle('active', p.dataset.preset === key));
       participantsBox.style.display = key === 'choice' ? 'none' : 'block';
       updateHub();
@@ -4888,7 +4888,7 @@ export async function openSwishlistModal() {
           const swishUrl = createSwishUrl({
             phone: f.friendSwish,
             amount: absAmount,
-            message: 'Malta Betting Duell'
+            message: 'Whooply Duell'
           });
 
           return `
@@ -4952,8 +4952,8 @@ export async function openSwishlistModal() {
         const name = btn.getAttribute('data-name');
         const amount = btn.getAttribute('data-amount');
         const text = isEn
-          ? `Hey ${name}! You owe me ${amount} kr from Malta Betting Dice Duel 🎲`
-          : `Tjena ${name}! Du är skyldig mig ${amount} kr från Malta Betting Tärningsduell 🎲`;
+          ? `Hey ${name}! You owe me ${amount} kr from Whooply Dice Duel 🎲`
+          : `Tjena ${name}! Du är skyldig mig ${amount} kr från Whooply Tärningsduell 🎲`;
         if (navigator.share) {
           navigator.share({ text }).catch(() => {});
         } else if (navigator.clipboard) {
@@ -8006,8 +8006,8 @@ export async function openGimmeModal() {
           </div>
           <p style="font-size:0.82rem;color:rgba(255,255,255,0.85);line-height:1.5;margin-bottom:14px;">
             ${isEn
-              ? 'Malta Betting AR Referee uses camera analysis which may be inaccurate depending on lighting, angle and distance from the hole.<br><br>Swish payment is <strong>voluntary and at your own risk</strong>. This is a party game — not a certified measurement tool.'
-              : 'Malta Betting AR-domare använder kameraanalys som kan vara unexakt beroende på ljus, vinkel och avstånd från hålet.<br><br>Swish-betalning sker <strong>frivilligt och på eget ansvar</strong>. Det här är ett sällskapsspel – inte en certifierad mätmetod.'}
+              ? 'Whooply AR Referee uses camera analysis which may be inaccurate depending on lighting, angle and distance from the hole.<br><br>Swish payment is <strong>voluntary and at your own risk</strong>. This is a party game — not a certified measurement tool.'
+              : 'Whooply AR-domare använder kameraanalys som kan vara unexakt beroende på ljus, vinkel och avstånd från hålet.<br><br>Swish-betalning sker <strong>frivilligt och på eget ansvar</strong>. Det här är ett sällskapsspel – inte en certifierad mätmetod.'}
           </p>
           <div style="display:flex;gap:10px;">
             <button id="gimme-disclaimer-cancel" class="btn btn-secondary btn-sm" style="flex:1;font-size:0.82rem;">
@@ -8587,7 +8587,7 @@ export async function openGimmeModal() {
               const swishUrl = createSwishUrl({
                 phone: winnerPhone,
                 amount: activeBet.stake,
-                message: `Malta Betting Gimme (${winner} ${isEn ? 'won' : 'vann'})`
+                message: `Whooply Gimme (${winner} ${isEn ? 'won' : 'vann'})`
               });
               betSwishLink.href = swishUrl;
             }
@@ -8698,11 +8698,11 @@ export async function openGimmeModal() {
       : '';
     let text = isApproved
       ? (isEn
-          ? `⛳️ Malta Betting Gimme Referee: Ball is APPROVED as Gimme (≤ ${limitUsed} cm)! 🏆${distLabel}${methodLabel}\nPick up the ball!`
-          : `⛳️ Malta Betting Gimme Domare: Bollen är GODKÄND som Gimme (≤ ${limitUsed} cm)! 🏆${distLabel}${methodLabel}\nPlocka upp bollen!`)
+          ? `⛳️ Whooply Gimme Referee: Ball is APPROVED as Gimme (≤ ${limitUsed} cm)! 🏆${distLabel}${methodLabel}\nPick up the ball!`
+          : `⛳️ Whooply Gimme Domare: Bollen är GODKÄND som Gimme (≤ ${limitUsed} cm)! 🏆${distLabel}${methodLabel}\nPlocka upp bollen!`)
       : (isEn
-          ? `⛳️ Malta Betting Gimme Referee: NOT A GIMME (> ${limitUsed} cm)! 😈${distLabel}${methodLabel}\nPutt it, coward!`
-          : `⛳️ Malta Betting Gimme Domare: ICKE GODKÄND Gimme (> ${limitUsed} cm)! 😈${distLabel}${methodLabel}\nPutta din fegis!`);
+          ? `⛳️ Whooply Gimme Referee: NOT A GIMME (> ${limitUsed} cm)! 😈${distLabel}${methodLabel}\nPutt it, coward!`
+          : `⛳️ Whooply Gimme Domare: ICKE GODKÄND Gimme (> ${limitUsed} cm)! 😈${distLabel}${methodLabel}\nPutta din fegis!`);
 
     if (activeBet) {
       const winner = isApproved ? activeBet.p1 : activeBet.p2;

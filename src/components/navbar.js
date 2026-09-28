@@ -71,7 +71,7 @@ export function renderNavbar(activePage) {
         `}
       </div>
       <div class="top-header-center">
-        <span class="top-header-logo" id="top-header-logo-btn" title="${currentLang === 'sv' ? 'Dela app / QR-kod 📱' : 'Share app / QR code 📱'}">THE SOCIAL BETWORK</span>
+        <span class="top-header-logo" id="top-header-logo-btn" title="${currentLang === 'sv' ? 'Dela app / QR-kod 📱' : 'Share app / QR code 📱'}">WHOOPLY</span>
       </div>
       <div class="top-header-right">
         ${renderBell()}

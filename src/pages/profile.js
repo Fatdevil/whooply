@@ -191,8 +191,8 @@ function renderAuthScreen(content) {
 
         <div style="margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--border-glass); text-align: center;">
           <button type="button" id="auth-malta-support-btn" style="background: none; border: none; color: var(--gold); font-size: 0.76rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: underline;">
-            <img src="/malta-chip-sm.webp" alt="Malta" style="width: 16px; height: 16px; object-fit: contain;" />
-            <span>${getLang() === 'en' ? 'Need help or forgot PIN? Ask Malta AI Support' : 'Frågor om inloggning eller PIN? Fråga Malta AI Kundtjänst'}</span>
+            <img src="/malta-chip-sm.webp" alt="Whooply" style="width: 16px; height: 16px; object-fit: contain;" />
+            <span>${getLang() === 'en' ? 'Need help or forgot PIN? Ask Whooply AI Support' : 'Frågor om inloggning eller PIN? Fråga Whooply AI Kundtjänst'}</span>
           </button>
         </div>
       </div>
@@ -202,7 +202,7 @@ function renderAuthScreen(content) {
     </div>
   `;
 
-  // Malta AI Support from Auth Screen
+  // Whooply AI Support from Auth Screen
   document.getElementById('auth-malta-support-btn')?.addEventListener('click', () => {
     openMaltaSupportModal();
   });
@@ -605,7 +605,7 @@ function renderProfileContent(content, user, bets, stats = EMPTY_STATS, creds, f
           <div>🔑 ${t('profile.changePin')}</div><span class="prof-chev">›</span>
         </button>
         <button type="button" class="prof-row" id="row-support">
-          <div>🇲🇹 Malta Support<small>${isEn ? 'Chat and floating button' : 'Chatt och flytande knapp'}${isFabDisabled ? (isEn ? ' (hidden)' : ' (dold)') : ''}</small></div>
+          <div>🇲🇹 Whooply Support<small>${isEn ? 'Chat and floating button' : 'Chatt och flytande knapp'}${isFabDisabled ? (isEn ? ' (hidden)' : ' (dold)') : ''}</small></div>
           <span class="prof-chev">›</span>
         </button>
         <button type="button" class="prof-row" id="row-language">
@@ -652,7 +652,7 @@ function renderProfileContent(content, user, bets, stats = EMPTY_STATS, creds, f
 
   // Logout
   document.getElementById('logout-btn').addEventListener('click', async () => {
-    if (!confirm(isEn ? 'Log out from Malta Betting on this phone?' : 'Logga ut från Malta Betting på den här telefonen?')) return;
+    if (!confirm(isEn ? 'Log out from Whooply on this phone?' : 'Logga ut från Whooply på den här telefonen?')) return;
     // Otherwise the phone keeps getting this account's notifications after logging out
     await detachPushFromAccount().catch(() => {});
     clearUser();
@@ -690,9 +690,9 @@ function renderProfileContent(content, user, bets, stats = EMPTY_STATS, creds, f
       showToast(err.message, 'error');
       return;
     }
-    const text = isEn ? 'Add me on Malta Betting 🎲' : 'Lägg till mig i Malta Betting 🎲';
+    const text = isEn ? 'Add me on Whooply 🎲' : 'Lägg till mig i Whooply 🎲';
     if (navigator.share) {
-      navigator.share({ title: 'Malta Betting', text, url: inviteUrl }).catch(() => {});
+      navigator.share({ title: 'Whooply', text, url: inviteUrl }).catch(() => {});
       return;
     }
     try {
@@ -896,7 +896,7 @@ function openSupportSheet() {
   const isEn = getLang() === 'en';
   const render = () => {
     const hidden = isMaltaFabDisabled();
-    showModal('🇲🇹 Malta Support', `
+    showModal('🇲🇹 Whooply Support', `
       <p class="text-muted" style="font-size: 0.85rem; line-height: 1.45; margin: 0 0 12px;">
         ${isEn
           ? 'Ask about rules, events, The Tab, a forgotten PIN – or just ask for a golf tip.'
@@ -934,8 +934,8 @@ function openNotificationsSheet({ pushSupported, pushPerm, isPushActive, notifPr
     body = isIos && !isStandalone ? `
       <p class="text-muted" style="font-size: 0.85rem; line-height: 1.45;">
         ${isEn
-          ? 'On iPhone, Apple only allows notifications when Malta Betting is saved to the home screen and opened from there.'
-          : 'På iPhone tillåter Apple bara notiser när Malta Betting är sparad på hemskärmen och öppnas därifrån.'}
+          ? 'On iPhone, Apple only allows notifications when Whooply is saved to the home screen and opened from there.'
+          : 'På iPhone tillåter Apple bara notiser när Whooply är sparad på hemskärmen och öppnas därifrån.'}
       </p>
       <button type="button" class="btn btn-primary btn-block" id="btn-profile-guide-push-ios">📲 ${isEn ? 'Show me how' : 'Visa hur'}</button>`
       : `<p class="text-muted" style="font-size: 0.85rem;">${isEn ? 'This browser does not support notifications.' : 'Den här webbläsaren stöder inte notiser.'}</p>`;
@@ -963,7 +963,7 @@ function openNotificationsSheet({ pushSupported, pushPerm, isPushActive, notifPr
           ${pref('pref-notify-flashbets', notifPrefs.notifyFlashbets, isEn ? '⚡ BlixtBets and quick games' : '⚡ BlixtBets och snabba spel')}
           ${pref('pref-notify-duels', notifPrefs.notifyDuels, isEn ? '⚔️ Challenges from friends' : '⚔️ Utmaningar från vänner')}
           ${pref('pref-notify-tournaments', notifPrefs.notifyTournaments, isEn ? '🏆 Events: new games and results' : '🏆 Event: nya spel och resultat')}
-          ${pref('pref-notify-support', notifPrefs.notifySupport !== false, isEn ? '🇲🇹 Malta Support' : '🇲🇹 Malta Support')}
+          ${pref('pref-notify-support', notifPrefs.notifySupport !== false, isEn ? '🇲🇹 Whooply Support' : '🇲🇹 Whooply Support')}
         </div>
         <button type="button" class="btn btn-secondary btn-sm btn-block mt-md" id="btn-test-malta-push">${isEn ? 'Send a test notification' : 'Skicka en testnotis'}</button>
       ` : ''}`;
@@ -1021,7 +1021,7 @@ function openNotificationsSheet({ pushSupported, pushPerm, isPushActive, notifPr
       const endpoint = await syncPushSubscription();
       const res = await fetch('/api/support/test-push', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-user-token': localStorage.getItem('betpals_token') || '' },
+        headers: { 'Content-Type': 'application/json', 'x-user-token': localStorage.getItem('whooply_token') || '' },
         body: JSON.stringify(endpoint ? { endpoint } : {})
       });
       const data = await res.json();
@@ -1178,7 +1178,7 @@ function showFriendOptionsModal(friend) {
                 ${escapeHtml(formatSwedishPhoneDisplay(friend.swishNumber))}
               </div>
             </div>
-            <a href="${createSwishUrl({ phone: friend.swishNumber, amount: 50, message: 'BetPals' })}" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; padding: 6px 12px; display: inline-flex; align-items: center; gap: 4px;">
+            <a href="${createSwishUrl({ phone: friend.swishNumber, amount: 50, message: 'Whooply' })}" class="btn btn-sm btn-secondary" style="font-size: 0.75rem; padding: 6px 12px; display: inline-flex; align-items: center; gap: 4px;">
               💸 Swisha
             </a>
           </div>
@@ -1256,10 +1256,10 @@ function showAddFriendModal(currentFriends = []) {
   const currentUser = getStoredUser();
   const myNick = currentUser?.nickname || '';
   let inviteUrl = `${getAppBaseUrl()}/?addFriend=${encodeURIComponent(myNick)}`;
-  let inviteText = `Tja! Häng med på Malta Betting och betta med oss: ${inviteUrl}`;
+  let inviteText = `Tja! Häng med på Whooply och betta med oss: ${inviteUrl}`;
   buildFriendInviteUrl().then(url => {
     inviteUrl = url;
-    inviteText = `Tja! Häng med på Malta Betting och betta med oss: ${inviteUrl}`;
+    inviteText = `Tja! Häng med på Whooply och betta med oss: ${inviteUrl}`;
   }).catch(() => {});
 
   showModal('👥 Lägg till vän', `
@@ -1336,7 +1336,7 @@ function showAddFriendModal(currentFriends = []) {
           document.getElementById('btn-native-share-invite')?.addEventListener('click', async () => {
             try {
               await navigator.share({
-                title: 'Malta Betting Inbjudan',
+                title: 'Whooply Inbjudan',
                 text: inviteText,
                 url: inviteUrl
               });

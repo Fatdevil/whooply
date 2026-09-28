@@ -10,18 +10,18 @@ const __dirname = dirname(__filename);
 // Database path resolution:
 // 1. Explicit DB_PATH / DATABASE_PATH environment variable
 // 2. Railway volume mount path (RAILWAY_VOLUME_MOUNT_PATH or DATA_DIR)
-// 3. Fallback to local betpals.db in server directory
+// 3. Fallback to local whooply.db in server directory
 let DB_DIR = process.env.RAILWAY_VOLUME_MOUNT_PATH || process.env.DATA_DIR;
 if (!DB_DIR && fs.existsSync('/data')) {
   DB_DIR = '/data';
 }
-const DB_PATH = process.env.DB_PATH || process.env.DATABASE_PATH || (DB_DIR ? join(DB_DIR, 'betpals.db') : join(__dirname, 'betpals.db'));
+const DB_PATH = process.env.DB_PATH || process.env.DATABASE_PATH || (DB_DIR ? join(DB_DIR, 'whooply.db') : join(__dirname, 'whooply.db'));
 
 if (DB_DIR) {
   if (!fs.existsSync(DB_DIR)) {
     try { fs.mkdirSync(DB_DIR, { recursive: true }); } catch (e) {}
   }
-  const sourceDb = join(__dirname, 'betpals.db');
+  const sourceDb = join(__dirname, 'whooply.db');
   if (DB_PATH !== sourceDb && !fs.existsSync(DB_PATH) && fs.existsSync(sourceDb)) {
     try {
       fs.copyFileSync(sourceDb, DB_PATH);
@@ -5102,7 +5102,7 @@ export async function backupDatabase(customDir = null) {
   }
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const filename = `betpals-backup-${timestamp}.db`;
+  const filename = `whooply-backup-${timestamp}.db`;
   const targetPath = join(targetDir, filename);
 
   await db.backup(targetPath);
@@ -5110,7 +5110,7 @@ export async function backupDatabase(customDir = null) {
   // Prune backups older than 7 days, keep at most 7 newest
   try {
     const files = fs.readdirSync(targetDir)
-      .filter(f => f.startsWith('betpals-backup-') && f.endsWith('.db'))
+      .filter(f => f.startsWith('whooply-backup-') && f.endsWith('.db'))
       .map(f => ({ name: f, path: join(targetDir, f), time: fs.statSync(join(targetDir, f)).mtimeMs }))
       .sort((a, b) => b.time - a.time);
 
@@ -5137,7 +5137,7 @@ export function getLatestBackup(customDir = null) {
   if (!fs.existsSync(targetDir)) return null;
 
   const files = fs.readdirSync(targetDir)
-    .filter(f => f.startsWith('betpals-backup-') && f.endsWith('.db'))
+    .filter(f => f.startsWith('whooply-backup-') && f.endsWith('.db'))
     .map(f => ({ name: f, path: join(targetDir, f), time: fs.statSync(join(targetDir, f)).mtimeMs }))
     .sort((a, b) => b.time - a.time);
 

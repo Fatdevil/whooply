@@ -187,7 +187,7 @@ export function createSwishUrl({ phone, amount, message }) {
     version: 1,
     payee: { value: cleanPhone },
     amount: { value: Math.max(1, Math.round(Number(amount) || 1)) },
-    message: { value: message || 'Malta Betting' }
+    message: { value: message || 'Whooply' }
   });
   return 'swish://payment?data=' + encodeURIComponent(swishData);
 }
@@ -251,7 +251,7 @@ export function generateIcsDataUrl({ title, description, startDate, endDate, url
   const ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Malta Betting//Game Event//SV',
+    'PRODID:-//Whooply//Game Event//SV',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
@@ -288,7 +288,7 @@ export function generateGoogleCalendarUrl({ title, description, startDate, endDa
 
 
 // ── Login prompt for pages that need a logged-in user ──
-const RETURN_TO_KEY = 'betpals_return_to';
+const RETURN_TO_KEY = 'whooply_return_to';
 
 export function rememberReturnTo(page, params = {}) {
   try {

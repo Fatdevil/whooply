@@ -1,7 +1,7 @@
 @import './styles/minigames.css';
 
 /* ══════════════════════════════════════════════════════════
-   BetPals 2.0 DELUXE — Design System
+   Whooply 2.0 DELUXE — Design System
    Apple-inspired · NEON YELLOW · Premium Dark
    ══════════════════════════════════════════════════════════ */
 
@@ -581,7 +581,7 @@ body::before {
   margin-bottom: var(--space-xl);
 }
 
-/* Malta Betting banner logo on home page */
+/* Whooply banner logo on home page */
 .home-logo-wrap {
   display: block;
   max-width: 240px;

@@ -15,7 +15,7 @@ function verifyStoredSession(token) {
   if (!authCheckInFlight) {
     authCheckInFlight = fetch(`${BASE}/users/me`, { headers: { 'x-user-token': token } })
       .then((res) => {
-        if (res.status === 401 && localStorage.getItem('betpals_token') === token) {
+        if (res.status === 401 && localStorage.getItem('whooply_token') === token) {
           clearUser();
           window.dispatchEvent(new CustomEvent('auth-expired'));
         }
@@ -29,7 +29,7 @@ function verifyStoredSession(token) {
 async function request(path, options = {}) {
   const headers = { 'Content-Type': 'application/json' };
   // Attach user auth token if available
-  const token = localStorage.getItem('betpals_token');
+  const token = localStorage.getItem('whooply_token');
   if (token) headers['x-user-token'] = token;
 
   // A request must never hang forever: on iPhone, a request made while the app is waking
@@ -112,7 +112,7 @@ export function connectWebSocket(eventCode = null) {
   disconnectWebSocket();
 
   wsEventCode = eventCode;
-  const token = localStorage.getItem('betpals_token');
+  const token = localStorage.getItem('whooply_token');
   const params = new URLSearchParams();
   if (eventCode) params.set('event', eventCode);
   const qs = params.toString() ? `?${params.toString()}` : '';
@@ -342,9 +342,9 @@ export const getLeaderboard = () => request('/leaderboard');
 export const getTournaments = () => request('/tournaments');
 // Superadmin may open any event (also friends-only ones they are not part of)
 export const getTournament = (code) => {
-  const pin = sessionStorage.getItem('betpals_pin');
+  const pin = sessionStorage.getItem('whooply_pin');
   return request('/tournaments/' + encodeURIComponent(code), pin
-    ? { headers: { 'Content-Type': 'application/json', 'x-user-token': localStorage.getItem('betpals_token') || '', 'x-admin-pin': pin } }
+    ? { headers: { 'Content-Type': 'application/json', 'x-user-token': localStorage.getItem('whooply_token') || '', 'x-admin-pin': pin } }
     : {});
 };
 export const getTournamentTemplates = () => request('/tournament-templates');

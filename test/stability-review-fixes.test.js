@@ -19,6 +19,6 @@ test('Stability Fix 1 — Superadmin PIN verification rejects empty and unauthor
 
 test('Stability Fix 2 — Startup automated database backup function exists and produces backup', async () => {
   const res = await db.backupDatabase();
-  assert.ok(res.filename.startsWith('betpals-backup-'), 'Backup filename should match naming pattern');
+  assert.ok(res.filename.startsWith('whooply-backup-'), 'Backup filename should match naming pattern');
   assert.ok(res.sizeBytes > 0, 'Backup size should be greater than 0');
 });

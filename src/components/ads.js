@@ -1,7 +1,7 @@
 // ── Components: Ads + GDPR Consent ────────────────────
 import { t } from '../i18n.js';
 
-const CONSENT_KEY = 'betpals_ad_consent';
+const CONSENT_KEY = 'whooply_ad_consent';
 
 export function initAds() {
   return; // Ads disabled during beta

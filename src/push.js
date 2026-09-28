@@ -27,7 +27,7 @@ export function getPushPermissionState() {
 
 // Set when the user turns notifications off in the profile. The browser permission stays
 // "granted" after that, so permission alone cannot tell whether notifications are on.
-const PUSH_DISABLED_KEY = 'betpals_push_disabled';
+const PUSH_DISABLED_KEY = 'whooply_push_disabled';
 
 export function isPushEnabledByUser() {
   try {
@@ -92,7 +92,7 @@ export async function subscribeToPush() {
   if (!isPushSupported()) {
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
     if (isIos) {
-      throw new Error('På iPhone måste Malta Betting sparas på hemskärmen först för att aktivera notiser');
+      throw new Error('På iPhone måste Whooply sparas på hemskärmen först för att aktivera notiser');
     }
     throw new Error('Push-notiser stöds inte i denna webbläsare eller kräver HTTPS');
   }
@@ -118,7 +118,7 @@ export async function subscribeToPush() {
 // subscription. Never prompts the user.
 // Resolves to this device's subscription endpoint, or null when it could not be synced.
 export async function syncPushSubscription() {
-  if (!isPushActive() || !localStorage.getItem('betpals_token')) return null;
+  if (!isPushActive() || !localStorage.getItem('whooply_token')) return null;
   try {
     const reg = await getReadyRegistration();
     const sub = await ensureSubscription(reg);

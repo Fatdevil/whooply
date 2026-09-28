@@ -524,7 +524,7 @@ wss.on('connection', (ws, req) => {
         const user = db.getUserByToken(msg.token);
         if (user) {
           boundUserId = user.id;
-          ws.betpalsUserId = user.id;
+          ws.whooplyUserId = user.id;
           if (!userClients.has(user.id)) userClients.set(user.id, new Set());
           userClients.get(user.id).add(ws);
 
@@ -732,9 +732,9 @@ wss.on('connection', (ws, req) => {
 
 
   ws.on('pong', () => {
-    if (ws.betpalsPingAt && ws.betpalsUserId) {
-      recordUserRtt(ws.betpalsUserId, performance.now() - ws.betpalsPingAt);
-      ws.betpalsPingAt = null;
+    if (ws.whooplyPingAt && ws.whooplyUserId) {
+      recordUserRtt(ws.whooplyUserId, performance.now() - ws.whooplyPingAt);
+      ws.whooplyPingAt = null;
     }
   });
 
@@ -828,7 +828,7 @@ if (!vapidPublicKey || !vapidPrivateKey) {
 }
 
 webpush.setVapidDetails(
-  process.env.VAPID_SUBJECT || 'mailto:support@betpals.se',
+  process.env.VAPID_SUBJECT || 'mailto:support@whooply.se',
   vapidPublicKey,
   vapidPrivateKey
 );
@@ -1915,7 +1915,7 @@ app.put('/api/users/me/avatar', express.json({ limit: '10mb' }), async (req, res
 
     if (cloudName && apiKey && apiSecret) {
       const timestamp = Math.round(Date.now() / 1000);
-      const folder = `betpals/avatars`;
+      const folder = `whooply/avatars`;
       const signStr = `folder=${folder}&timestamp=${timestamp}${apiSecret}`;
       const signature = crypto.createHash('sha1').update(signStr).digest('hex');
 
@@ -2003,7 +2003,7 @@ app.post('/api/tournaments/:id/photos', express.json({ limit: '10mb' }), async (
     // If Cloudinary is configured, use it. Otherwise, fallback to base64 inline (not recommended for prod, but good for test).
     if (cloudName && apiKey && apiSecret) {
       const timestamp = Math.round(Date.now() / 1000);
-      const folder = `betpals/tournaments/${shareCode}`;
+      const folder = `whooply/tournaments/${shareCode}`;
       const signStr = `folder=${folder}&timestamp=${timestamp}${apiSecret}`;
       const signature = crypto.createHash('sha1').update(signStr).digest('hex');
 
@@ -2210,7 +2210,7 @@ app.post('/api/friends', (req, res) => {
   broadcastToUser(target.id, { type: 'friend_request', from: publicFriend(user) });
   sendPushToUsers([target.id], {
     title: '👥 Ny vänförfrågan',
-    body: `${requesterName} vill bli vän med dig i Malta Betting.`,
+    body: `${requesterName} vill bli vän med dig i Whooply.`,
     url: '/#profile'
   }, null, { bell: false }).catch(() => {});
 
@@ -3672,7 +3672,7 @@ app.post('/api/tournaments/:id/settle', (req, res) => {
   const memberIds = new Set(db.getTournamentMemberIds(tournament.id));
   const pushIds = [...new Set([...participantIds, ...memberIds])].filter(uid => !user || uid !== user.id);
   for (const pid of pushIds) {
-    let body = 'Slutresultatet är fastställt! Se prispallen och nettavräkningen i Malta Betting.';
+    let body = 'Slutresultatet är fastställt! Se prispallen och nettavräkningen i Whooply.';
     let url = `/#tournament/${tournament.shareCode}`;
     if (memberIds.has(pid)) try {
       const o = db.getUnifiedSettlementOverview(pid);
@@ -4550,9 +4550,9 @@ function pingPartyPlayers(roomId) {
   for (let i = 0; i < PARTY_PING_ROUNDS; i++) {
     setTimeout(() => {
       for (const ws of partyClients.get(roomId) || []) {
-        if (ws.readyState !== 1 || !ws.betpalsUserId) continue;
+        if (ws.readyState !== 1 || !ws.whooplyUserId) continue;
         try {
-          ws.betpalsPingAt = performance.now();
+          ws.whooplyPingAt = performance.now();
           ws.ping();
         } catch {}
       }
@@ -6935,7 +6935,7 @@ if (fs.existsSync(indexHtml)) {
 const PORT = process.env.PORT || 3001;
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, () => {
-    console.log(`🎯 BetPals server running on http://localhost:${PORT}`);
+    console.log(`🎯 Whooply server running on http://localhost:${PORT}`);
     console.log(`📡 WebSocket ready on ws://localhost:${PORT}`);
     console.log(`💾 SQLite database active`);
   });

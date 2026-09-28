@@ -29,7 +29,7 @@ export function openMaltaSupportModal(initialQuestion = null) {
 
   const modalTitle = `
     <div style="display: flex; align-items: center; gap: 8px;">
-      <img src="/malta-chip-sm.webp" alt="Malta" style="width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(255,215,0,0.5));" />
+      <img src="/malta-chip-sm.webp" alt="Whooply" style="width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(255,215,0,0.5));" />
       <span>${isEn ? 'Malta VIP Support 🇲🇹' : 'Malta Kundtjänst 🇲🇹'}</span>
     </div>
   `;
@@ -54,11 +54,11 @@ export function openMaltaSupportModal(initialQuestion = null) {
       <!-- Chat messages log -->
       <div class="malta-chat-box" id="malta-chat-messages">
         <div class="malta-msg malta-msg-bot">
-          <img src="/malta-chip-sm.webp" class="malta-msg-avatar" alt="Malta" />
+          <img src="/malta-chip-sm.webp" class="malta-msg-avatar" alt="Whooply" />
           <div class="malta-msg-bubble">
             ${isEn
-              ? "Welcome to Malta Betting support! 🇲🇹 Ask me how to decide a match, who swishes whom on The Tab, adding games, friends – or get a quick swing tip. ⛳"
-              : "Tjena mästaren! 🇲🇹 Välkommen till Malta Betting-supporten! Fråga hur du avgör en match, vem som swishar vem på THE TAB, hur du lägger till spel och vänner – eller be om ett snabbt svingtips. ⛳"}
+              ? "Welcome to Whooply support! 🇲🇹 Ask me how to decide a match, who swishes whom on The Tab, adding games, friends – or get a quick swing tip. ⛳"
+              : "Tjena mästaren! 🇲🇹 Välkommen till Whooply-supporten! Fråga hur du avgör en match, vem som swishar vem på THE TAB, hur du lägger till spel och vänner – eller be om ett snabbt svingtips. ⛳"}
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@ export function openMaltaSupportModal(initialQuestion = null) {
         showToast(
           isEn 
             ? 'Malta icon visible on screen! Drag to move around.' 
-            : 'Malta-ikonen visas nu på skärmen igen! Dra i den för att flytta.', 
+            : 'Whooply-ikonen visas nu på skärmen igen! Dra i den för att flytta.', 
           'success'
         );
       }
@@ -188,7 +188,7 @@ async function handleSend() {
   typingEl.className = 'malta-msg malta-msg-bot malta-typing-bubble';
   typingEl.id = 'malta-typing-indicator';
   typingEl.innerHTML = `
-    <img src="/malta-chip-sm.webp" class="malta-msg-avatar" alt="Malta" />
+    <img src="/malta-chip-sm.webp" class="malta-msg-avatar" alt="Whooply" />
     <div class="malta-msg-bubble">
       <span class="malta-typing-dots">
         <span></span><span></span><span></span>
@@ -200,7 +200,7 @@ async function handleSend() {
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-    const token = localStorage.getItem('betpals_token');
+    const token = localStorage.getItem('whooply_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['x-user-token'] = token;
 
@@ -280,7 +280,7 @@ function appendChatMessage(sender, rawText, scroll = true, suggestions = []) {
 
   if (sender === 'bot') {
     msgEl.innerHTML = `
-      <img src="/malta-chip-sm.webp" class="malta-msg-avatar" alt="Malta" />
+      <img src="/malta-chip-sm.webp" class="malta-msg-avatar" alt="Whooply" />
       <div class="malta-msg-bubble">${formatted}
         ${suggestions.length ? `<div class="malta-suggest">${suggestions.map(t => `<button type="button" class="malta-chip-btn" data-topic="${escapeHtml(t.label)}">${escapeHtml(t.label)}</button>`).join('')}</div>` : ''}
       </div>

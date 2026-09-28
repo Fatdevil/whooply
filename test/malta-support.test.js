@@ -27,8 +27,8 @@ test('Malta Support — Generates rich fallback replies for golf, birdies, tab a
   // Nothing matched: a short list of topics instead of a dead end
   const generalReply = getMaltaFallbackReply('Tja vad kan du hjälpa till med?', 'Alex');
   assert.ok(generalReply.includes('Välj ett ämne'), 'General reply offers topics');
-  assert.ok(generalReply.includes('Malta Betting'), 'Should refer to Malta Betting');
-  assert.ok(!generalReply.includes('BetPals'), 'Should never refer to BetPals');
+  assert.ok(generalReply.includes('Whooply'), 'Should refer to Whooply');
+  assert.ok(!generalReply.includes('Whooply'), 'Should never refer to Whooply');
 
   const videoReply = getMaltaFallbackReply('Visa en video för att tagga!', 'Alex');
   assert.ok(videoReply.includes('https://youtu.be/0EoEY4fi3vo'), 'Should provide official YouTube link');

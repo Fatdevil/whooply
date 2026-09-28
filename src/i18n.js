@@ -3,7 +3,7 @@ import { sv } from './lang/sv.js';
 import { en } from './lang/en.js';
 
 const languages = { sv, en };
-let currentLang = (typeof localStorage !== 'undefined' ? localStorage.getItem('betpals_lang') : null) || detectLanguage();
+let currentLang = (typeof localStorage !== 'undefined' ? localStorage.getItem('whooply_lang') : null) || detectLanguage();
 
 // The app is made for a Swedish group of friends: Swedish unless someone picks English
 // in the language menu (an English phone setting alone should not mix the languages)
@@ -35,7 +35,7 @@ export function setLang(lang) {
   if (languages[lang]) {
     currentLang = lang;
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('betpals_lang', lang);
+      localStorage.setItem('whooply_lang', lang);
     }
     // Trigger re-render
     if (typeof window !== 'undefined') {

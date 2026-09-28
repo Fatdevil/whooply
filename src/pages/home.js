@@ -16,8 +16,8 @@ export async function renderHome() {
   content.innerHTML = `
     <div id="home-live-banner-container"></div>
     <div class="page-header animate-in" style="padding-top: 0; margin-top: -4px; margin-bottom: 4px;">
-      <div class="home-logo-wrap" id="home-logo-btn" role="button" tabindex="0" style="max-width: 150px; margin: 0 auto; cursor: pointer;" title="Malta Betting">
-        <img src="/logo-banner.png" alt="Malta Betting" class="home-logo-banner" />
+      <div class="home-logo-wrap" id="home-logo-btn" role="button" tabindex="0" style="max-width: 150px; margin: 0 auto; cursor: pointer;" title="Whooply">
+        <img src="/logo-banner.png" alt="Whooply" class="home-logo-banner" />
       </div>
     </div>
     <div id="home-action-feed-container"></div>
@@ -225,7 +225,7 @@ export async function renderHome() {
       document.getElementById('events-list').innerHTML = `
         <div class="empty-state">
           <div style="display: flex; justify-content: center; margin-bottom: var(--space-md);">
-            <img src="/malta-betting-chips.png" alt="Malta Betting" class="animate-in" style="width: 140px; max-width: 60vw; height: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 16px rgba(255, 215, 0, 0.25));" />
+            <img src="/malta-betting-chips.png" alt="Whooply" class="animate-in" style="width: 140px; max-width: 60vw; height: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 16px rgba(255, 215, 0, 0.25));" />
           </div>
           <p class="empty-state-text">${t('home.noEvents')}</p>
           <div class="flex gap-md" style="justify-content: center;">
@@ -397,7 +397,7 @@ function initHomePushBanner(isEn) {
 
   // Don't show if push is unsupported, already granted, or dismissed this session
   if (!isPushSupported() || getPushPermissionState() === 'granted') return;
-  if (sessionStorage.getItem('betpals_push_dismissed')) return;
+  if (sessionStorage.getItem('whooply_push_dismissed')) return;
 
   container.innerHTML = `
     <div id="home-push-banner" class="animate-in" style="
@@ -442,7 +442,7 @@ function initHomePushBanner(isEn) {
   });
 
   document.getElementById('btn-home-dismiss-push')?.addEventListener('click', () => {
-    sessionStorage.setItem('betpals_push_dismissed', '1');
+    sessionStorage.setItem('whooply_push_dismissed', '1');
     container.innerHTML = '';
   });
 }

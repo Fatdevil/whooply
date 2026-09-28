@@ -27,7 +27,7 @@ export const en = {
     account: 'Profile'
   },
   home: {
-    title: 'Malta Betting',
+    title: 'Whooply',
     subtitle: '✦ BE PART OF GREATNESS ✦',
     tournaments: 'Events',
     events: 'Quick Games',
@@ -151,7 +151,7 @@ export const en = {
     tournamentPlayerPlaceholder: 'Search friends to invite...',
     tournamentVisibility: 'Access & Visibility',
     visFriends: 'Friends Only',
-    visFriendsDesc: 'Only your Malta Betting friends',
+    visFriendsDesc: 'Only your Whooply friends',
     visFriendsOfFriends: 'Friends of Friends',
     visFriendsOfFriendsDesc: 'Your friends & their friends',
     visLink: 'Anyone with Link / QR',
@@ -161,7 +161,7 @@ export const en = {
     visPublic: 'Open to All',
     visPublicDesc: 'Visible in home feed',
     legalNoticeTitle: 'Closed Group (Gambling Act)',
-    legalNoticeDesc: 'Games on Malta Betting take place strictly within private circles. Only share link/code directly with members of your closed group.',
+    legalNoticeDesc: 'Games on Whooply take place strictly within private circles. Only share link/code directly with members of your closed group.',
     submitCreateTournament: 'Start Event 🏆',
     tournamentsTitle: '🏆 My Events',
     roundsFinished: 'rounds completed',
@@ -308,8 +308,8 @@ export const en = {
     viewTournaments: '🏆 View Tournaments & Events',
     allSettledTitle: 'All settled up! 🟢',
     allSettledDesc: 'You have no open debts or pending payouts across any tournaments, minigames or tabs.',
-    remindAllShareTitle: 'Malta Betting – Outstanding debts reminder',
-    remindAllShareBody: 'Hey guys! Friendly reminder for the open debts from The Tab / Malta Betting ({amount} kr total). Please Swish to {phone}! 📱🤝'
+    remindAllShareTitle: 'Whooply – Outstanding debts reminder',
+    remindAllShareBody: 'Hey guys! Friendly reminder for the open debts from The Tab / Whooply ({amount} kr total). Please Swish to {phone}! 📱🤝'
   },
   join: {
     title: 'Join',
@@ -384,7 +384,7 @@ export const en = {
     slots: 'Slots 777',
     slotsTag: 'Jackpot',
     slotsTitle: 'Slots 777',
-    slotsDesc: 'Due to gambling laws (which MaltaBetting strictly respects), we only play for points here 🎰😇',
+    slotsDesc: 'Due to gambling laws (which Whooply strictly respects), we only play for points here 🎰😇',
     slotsChips: 'Your chips:',
     slotsRefill: '+100 Free',
     slotsPrompt: 'Pull the lever to play!',
@@ -511,7 +511,7 @@ export const en = {
     spaceWave: 'WAVE',
     spaceTime: 'TIME LEFT',
     spaceLives: 'LIVES',
-    spaceUfoBonus: 'MALTA GOLD UFO! +200 PTS!',
+    spaceUfoBonus: 'WHOOPLY GOLD UFO! +200 PTS!',
     mafia: 'Mafia',
     mafiaTag: 'Party & Bluff',
     mafiaTitle: 'Mafia',

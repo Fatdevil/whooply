@@ -16,7 +16,7 @@ let outsideClickBound = false;
 
 // Load from sessionStorage
 try {
-  const saved = sessionStorage.getItem('betpals_notifications');
+  const saved = sessionStorage.getItem('whooply_notifications');
   if (saved) {
     const parsed = JSON.parse(saved);
     notifications = parsed.items || [];
@@ -26,7 +26,7 @@ try {
 
 function save() {
   try {
-    sessionStorage.setItem('betpals_notifications', JSON.stringify({
+    sessionStorage.setItem('whooply_notifications', JSON.stringify({
       items: notifications.slice(0, MAX_NOTIFICATIONS),
       unread: unreadCount
     }));

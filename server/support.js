@@ -1,11 +1,11 @@
 // ── Malta AI Support Engine (VIP Concierge & Betting Specialist) ──
-// Provides intelligent AI responses for Malta Betting via Gemini API with a rich offline fallback.
+// Provides intelligent AI responses for Whooply via Gemini API with a rich offline fallback.
 import * as db from './db.js';
 
 // What Malta Support knows about the app. Kept in one place and in the words the app
 // uses on its buttons, so the AI and the offline answers never drift apart.
 const APP_FACTS = `
-Så fungerar Malta Betting (använd exakt dessa knappnamn):
+Så fungerar Whooply (använd exakt dessa knappnamn):
 
 1. EVENT: Ett event samlar gänget, t.ex. "Golfhelg Malta". Skapa via Admin → "SKAPA EVENT". Bjud in via "📱 Dela event" (länk/QR) eller "Bjud in vänner" (push).
 2. SPEL I EVENTET: På eventsidan → "➕ Lägg till spel". Speltyper:
@@ -33,7 +33,7 @@ Så fungerar Malta Betting (använd exakt dessa knappnamn):
 `.trim();
 
 const MALTA_SYSTEM_PROMPT = `
-Du är "Malta Support 🇲🇹" – kundtjänsten i appen Malta Betting. Appen heter alltid Malta Betting, aldrig BetPals.
+Du är "Malta Support 🇲🇹" – kundtjänsten i appen Whooply. Appen heter alltid Whooply, aldrig Whooply.
 
 Personlighet: en solbränd, trevlig och professionell VIP-concierge i St. Julian's. Rapp, rolig och med glimten i ögat – golf, kall lager och hederliga vad där ingen smiter från sina skulder. Svara på svenska (engelska om användaren skriver engelska), kort och konkret, med några passande emojis.
 
@@ -205,17 +205,17 @@ Guldregeln: grepptryck 4 av 10 och 80 % tempo! 🍻
   {
     id: 'stocks', label: '📈 Börsen',
     keywords: ['börs*', 'aktie*', 'omx*', 'fond*', 'avanza', 'finans*'],
-    answer: (n) => `Hallå där ${n}! 🏌️‍♂️💼 Live-kurser kan jag inte hämta just nu – och ärligt talat, du är ju på golfresa! Lägg ner Avanza, träffa fairway och ta hem potten i Malta Betting istället. Ölen på 19:e smakar lika gott oavsett om börsen är röd eller grön! ⛳🍻`
+    answer: (n) => `Hallå där ${n}! 🏌️‍♂️💼 Live-kurser kan jag inte hämta just nu – och ärligt talat, du är ju på golfresa! Lägg ner Avanza, träffa fairway och ta hem potten i Whooply istället. Ölen på 19:e smakar lika gott oavsett om börsen är röd eller grön! ⛳🍻`
   },
   {
     id: 'internet', label: '📶 Internet',
     keywords: ['internet', 'surf*', 'wifi', 'söka', 'google'],
-    answer: (n) => `Haha ${n}! 🌴📶 Just nu kör Malta-kontoret utan surf – men jag kan fortfarande allt om Malta Betting: event, spel, THE TAB, notiser och svingen. Vad vill du ha hjälp med? 🏌️‍♂️`
+    answer: (n) => `Haha ${n}! 🌴📶 Just nu kör Malta-kontoret utan surf – men jag kan fortfarande allt om Whooply: event, spel, THE TAB, notiser och svingen. Vad vill du ha hjälp med? 🏌️‍♂️`
   },
   {
     id: 'video', label: '🎬 Malta-videon',
     keywords: ['video*', 'film*', 'youtube', 'pepp*', 'hype', 'tagga*', 'låt', 'musik'],
-    answer: (n) => `Jajamän ${n}! 🔥🎬 Officiella Malta Betting-videon som sätter stämningen: https://youtu.be/0EoEY4fi3vo 🏌️‍♂️🍻`
+    answer: (n) => `Jajamän ${n}! 🔥🎬 Officiella Whooply-videon som sätter stämningen: https://youtu.be/0EoEY4fi3vo 🏌️‍♂️🍻`
   }
 ];
 
@@ -263,7 +263,7 @@ export function matchSupportTopics(message) {
 export function getMaltaFallbackReply(message, userName = 'Kompis') {
   const best = matchSupportTopics(message)[0];
   if (best) return best.topic.answer(userName);
-  return `Tjena ${userName}! 🌴 Det där hittar jag inget färdigt svar på i Malta Betting-handboken just nu. Välj ett ämne nedan – eller skriv med andra ord, t.ex. *"hur avgör jag en match?"* ⛳`;
+  return `Tjena ${userName}! 🌴 Det där hittar jag inget färdigt svar på i Whooply-handboken just nu. Välj ett ämne nedan – eller skriv med andra ord, t.ex. *"hur avgör jag en match?"* ⛳`;
 }
 
 // Suggestions to show under an offline answer: other close topics, else the main ones
@@ -539,13 +539,13 @@ Spel/Turnering: ${details.gameType || details.tournamentName || 'spelet'}
 Belopp: ${details.stakeAmount || details.netAmount || 50} kr
 `;
 
-  const prompt = `Du är "Malta Support 🇲🇹" – den solbrända, kaxiga och sköna VIP Conciergen för appen Malta Betting.
+  const prompt = `Du är "Malta Support 🇲🇹" – den solbrända, kaxiga och sköna VIP Conciergen för appen Whooply.
 Skriv en ultrakort, slagkraftig, rolig push-notis till spelaren baserat på denna händelse:
 ${contextDesc}
 
 Krav:
 - Max 120 tecken!
-- Får INTE nämna "BetPals" någonsin (appen heter Malta Betting).
+- Får INTE nämna "Whooply" någonsin (appen heter Whooply).
 - Humör: Kaxig, skön humor, glimten i ögat, golf/bärs/espresso/revansch-pepp.
 - Svara i exakt JSON-format: {"title": "🇲🇹 Malta Support: ...", "body": "..."}
 - Skriv ingenting annat än JSON-objektet.`;

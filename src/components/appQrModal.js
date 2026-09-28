@@ -8,22 +8,22 @@ export async function openAppQrModal(customUrl) {
   const isEn = getLang() === 'en';
   const targetUrl = customUrl || getAppBaseUrl();
   
-  const modalTitle = isEn ? 'Share Malta Betting 📱' : 'Dela Malta Betting 📱';
+  const modalTitle = isEn ? 'Share Whooply 📱' : 'Dela Whooply 📱';
 
   const contentHtml = `
     <div style="text-align: center; padding: 4px 0;">
       <!-- Logo Banner -->
       <div style="margin-bottom: 12px;">
-        <img src="/logo-banner.png" alt="Malta Betting" style="max-height: 46px; max-width: 220px; object-fit: contain; margin: 0 auto; display: block; filter: drop-shadow(0 4px 16px rgba(255,215,0,0.35));" />
+        <img src="/logo-banner.png" alt="Whooply" style="max-height: 46px; max-width: 220px; object-fit: contain; margin: 0 auto; display: block; filter: drop-shadow(0 4px 16px rgba(255,215,0,0.35));" />
         <div style="font-size: 0.75rem; color: var(--gold); font-weight: 700; letter-spacing: 0.1em; margin-top: 6px; text-transform: uppercase;">
-          The Social Betwork
+          Whooply
         </div>
       </div>
 
       <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0 auto 16px; max-width: 320px; line-height: 1.4;">
         ${isEn 
-          ? 'Scan the QR code with your phone camera to open Malta Betting directly on your device — no download needed!' 
-          : 'Scanna QR-koden med mobilkameran för att öppna Malta Betting direkt i mobilen — ingen nedladdning behövs!'}
+          ? 'Scan the QR code with your phone camera to open Whooply directly on your device — no download needed!' 
+          : 'Scanna QR-koden med mobilkameran för att öppna Whooply direkt i mobilen — ingen nedladdning behövs!'}
       </p>
 
       <!-- QR Code Display Area -->
@@ -134,10 +134,10 @@ export async function openAppQrModal(customUrl) {
   // Native Share Button
   root.querySelector('#btn-share-app-native')?.addEventListener('click', async () => {
     const shareData = {
-      title: 'Malta Betting',
+      title: 'Whooply',
       text: isEn 
-        ? 'Join Malta Betting! Play minigames, social betting and duels with friends 🎲📱'
-        : 'Häng med i Malta Betting! Spela minispel, betta och utmana kompisarna 🎲📱',
+        ? 'Join Whooply! Play minigames, social betting and duels with friends 🎲📱'
+        : 'Häng med i Whooply! Spela minispel, betta och utmana kompisarna 🎲📱',
       url: targetUrl
     };
 

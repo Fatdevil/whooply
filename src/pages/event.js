@@ -104,7 +104,7 @@ function renderSettlementSection(event, payoutInfo) {
   }
   html += '</div>';
 
-  const hasPinSession = !!sessionStorage.getItem('betpals_pin');
+  const hasPinSession = !!sessionStorage.getItem('whooply_pin');
   const isCreatorOrAdmin = (currentUser && event.creatorId === currentUser.id) || hasPinSession;
 
   // Losing bets — who owes what
@@ -324,7 +324,7 @@ function renderPicksSection(event, { canPick, currentUser, isOpen, isFinished })
 function hostsEvent(event, currentUser = getStoredUser()) {
   return Boolean((currentUser && (event.creatorId === currentUser.id
     || (event.tournamentId && tournamentCreatorById[event.tournamentId] === currentUser.id)))
-    || sessionStorage.getItem('betpals_pin'));
+    || sessionStorage.getItem('whooply_pin'));
 }
 
 function couponView(event) {
@@ -496,7 +496,7 @@ function bindCoupon(event, content, code) {
       if (!confirm('Stänga tippningen för alla och börja rätta matcherna?')) return;
       start.disabled = true;
       try {
-        await lockEvent(event.id, sessionStorage.getItem('betpals_pin') || '');
+        await lockEvent(event.id, sessionStorage.getItem('whooply_pin') || '');
         await reload();
       } catch (err) {
         showToast(err.message, 'error');
@@ -515,7 +515,7 @@ function bindCoupon(event, content, code) {
     if (value && stillOpen && !confirm('Första rättningen stänger tippningen för alla. Fortsätta?')) return;
     buttons.forEach(b => { b.disabled = true; });
     try {
-      const res = await setCouponResult(event.id, Number(btn.dataset.match), value, sessionStorage.getItem('betpals_pin') || '');
+      const res = await setCouponResult(event.id, Number(btn.dataset.match), value, sessionStorage.getItem('whooply_pin') || '');
       if (res.locked) {
         await reload();
       } else {
@@ -528,7 +528,7 @@ function bindCoupon(event, content, code) {
     }
   }));
   box.querySelector('#coupon-finish-btn')?.addEventListener('click', () => {
-    openFinishEventModal(event, { pin: sessionStorage.getItem('betpals_pin') || '', onDone: reload });
+    openFinishEventModal(event, { pin: sessionStorage.getItem('whooply_pin') || '', onDone: reload });
   });
 }
 
@@ -1043,7 +1043,7 @@ function renderEventContent(event, content, code) {
   document.getElementById('creator-lock-btn')?.addEventListener('click', async () => {
     if (!confirm(`Vill du stänga bettningen för "${event.name}" nu? Inga fler bets kommer tas emot.`)) return;
     try {
-      const pin = sessionStorage.getItem('betpals_pin') || '';
+      const pin = sessionStorage.getItem('whooply_pin') || '';
       await lockEvent(event.id, pin);
       showToast('Bettning stängd! 🔒', 'info');
       const updated = await getEvent(code);
@@ -1056,7 +1056,7 @@ function renderEventContent(event, content, code) {
   document.getElementById('creator-reopen-btn')?.addEventListener('click', async () => {
     if (!confirm(`Vill du öppna bettningen för "${event.name}" igen?`)) return;
     try {
-      const pin = sessionStorage.getItem('betpals_pin') || '';
+      const pin = sessionStorage.getItem('whooply_pin') || '';
       const reopenRes = await reopenEvent(event.id, pin);
       showToast(reopenRes?.status === 'locked' ? reopenRes.message : 'Bettningen är öppen igen! 🔓', reopenRes?.status === 'locked' ? 'info' : 'success');
       const updated = await getEvent(code);
@@ -1071,7 +1071,7 @@ function renderEventContent(event, content, code) {
 
   document.getElementById('creator-finish-btn')?.addEventListener('click', () => {
     openFinishEventModal(event, {
-      pin: sessionStorage.getItem('betpals_pin') || '',
+      pin: sessionStorage.getItem('whooply_pin') || '',
       onDone: async () => {
         const updated = await getEvent(code);
         renderEventContent(updated, content, code);
@@ -1117,8 +1117,8 @@ function openCalendarModal(event) {
   const startDate = parseDateSafe(event.closesAt) || parseDateSafe(event.date) || new Date();
   const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
   const baseUrl = getAppBaseUrl();
-  const title = `Malta Betting: ${event.name}`;
-  const description = `Spela och lägg dina bets på "${event.name}" i Malta Betting!\nKod: ${event.shareCode}\nLänk: ${baseUrl}/?page=event&code=${event.shareCode}`;
+  const title = `Whooply: ${event.name}`;
+  const description = `Spela och lägg dina bets på "${event.name}" i Whooply!\nKod: ${event.shareCode}\nLänk: ${baseUrl}/?page=event&code=${event.shareCode}`;
   const icsUrl = generateIcsDataUrl({
     title,
     description,
@@ -1131,7 +1131,7 @@ function openCalendarModal(event) {
     description,
     startDate,
     endDate,
-    location: 'Malta Betting'
+    location: 'Whooply'
   });
 
   showModal('📅 Lägg till i kalender', `
@@ -1165,7 +1165,7 @@ function openResultUrlModal(event, content, code) {
   `);
   const save = async (url) => {
     try {
-      await setEventResultUrl(event.id, url, sessionStorage.getItem('betpals_pin') || '');
+      await setEventResultUrl(event.id, url, sessionStorage.getItem('whooply_pin') || '');
       closeModal();
       showToast(url ? 'Länken är sparad 📊' : 'Länken är borttagen', 'success');
       const updated = await getEvent(code);
@@ -1336,7 +1336,7 @@ async function openEventShareModal(code, eventName) {
     const baseUrl = getAppBaseUrl();
     const data = await getEventQR(code, baseUrl);
     const shareUrl = `${baseUrl}/?page=event&code=${code}`;
-    const shareMsg = `🎲 Häng på och lägg dina bets på "${eventName || 'spelet'}" i Malta Betting! Länk: ${shareUrl}`;
+    const shareMsg = `🎲 Häng på och lägg dina bets på "${eventName || 'spelet'}" i Whooply! Länk: ${shareUrl}`;
 
     showModal('📱 Dela spel', `
       <div class="text-center">
@@ -1369,7 +1369,7 @@ async function openEventShareModal(code, eventName) {
 
     document.getElementById('event-native-share-btn')?.addEventListener('click', async () => {
       try {
-        await navigator.share({ title: eventName || 'Malta Betting', text: shareMsg, url: shareUrl });
+        await navigator.share({ title: eventName || 'Whooply', text: shareMsg, url: shareUrl });
       } catch {}
     });
   } catch (err) {

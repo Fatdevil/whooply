@@ -1,6 +1,6 @@
-# BetPals – Operativ Runbook för Beta & Drift
+# Whooply – Operativ Runbook för Beta & Drift
 
-Denna lathund är en praktisk guide för dig som driftar och administrerar BetPals under den slutna betan (20 användare) och inför skarp matchkväll.
+Denna lathund är en praktisk guide för dig som driftar och administrerar Whooply under den slutna betan (20 användare) och inför skarp matchkväll.
 
 ---
 
@@ -12,10 +12,10 @@ Ställs in i driftmiljön (t.ex. **Railway → Settings → Variables**):
 |---|---|---|
 | `NODE_ENV` | `production` | Sätt alltid till `production` i skarp drift. |
 | `PORT` | `3001` | Porten Express lyssnar på (Railway sätter detta automatiskt). |
-| `BETPALS_INVITE_CODE` | *Ingen (öppen)* | **Viktig för betan:** Sätt en hemlig kod (t.ex. `BETAPALS2025`) så kan endast inbjudna kompisar registrera sig. |
+| `WHOOPLY_INVITE_CODE` | *Ingen (öppen)* | **Viktig för betan:** Sätt en hemlig kod (t.ex. `BETAPALS2025`) så kan endast inbjudna kompisar registrera sig. |
 | `ADMIN_PIN` | *Ingen* | **Obligatorisk i produktion.** Superadmin-lösenord, minst 8 tecken. Synkas in i databasen vid varje start (miljövariabeln gäller alltid). I produktion går det inte att sätta admin-lösenordet via appen. Felaktiga försök spärrar IP-adressen i 15 min efter 5 fel. |
 | `RAILWAY_VOLUME_MOUNT_PATH` | `/data` | Sökväg till persistent disk. Säkerställer att SQLite-databasen överlever omstarter och deploys. |
-| `DB_PATH` | `/data/betpals.db` | Alternativ explicit sökväg till databasfilen. |
+| `DB_PATH` | `/data/whooply.db` | Alternativ explicit sökväg till databasfilen. |
 | `CLOUDINARY_CLOUD_NAME` | *Valfri* | Cloudinary cloud name för mobil- och turneringsfoton. |
 | `CLOUDINARY_API_KEY` | *Valfri* | Cloudinary API Key. |
 | `CLOUDINARY_API_SECRET` | *Valfri* | Cloudinary API Secret. |
@@ -23,23 +23,23 @@ Ställs in i driftmiljön (t.ex. **Railway → Settings → Variables**):
 | `LIVEKIT_API_KEY` | *Valfri* | LiveKit Cloud API Key. |
 | `LIVEKIT_API_SECRET` | *Valfri* | LiveKit Cloud API Secret. |
 | `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | *Genereras automatiskt* | Nycklar för pushnotiser. Sätt dem i miljön så att de inte ändras om databasen återställs. Om nycklarna ändras slutar alla telefoners notiser att fungera tills appen öppnas igen (då registreras de om automatiskt). Värdena finns i tabellen `settings` (`vapid_public_key`, `vapid_private_key`). |
-| `VAPID_SUBJECT` | `mailto:support@betpals.se` | Kontaktadress som skickas till push-tjänsterna (Apple/Google). |
+| `VAPID_SUBJECT` | `mailto:support@whooply.se` | Kontaktadress som skickas till push-tjänsterna (Apple/Google). |
 | `GEMINI_API_KEY` | *Valfri* | Google Gemini API-nyckel för skarp AI-support (Gemini 2.0 Flash) i Malta AI-chatten. Hämtas från Google AI Studio. Om den saknas används offline fallback-motorn. Kan även ställas in via Admin API (/api/admin/gemini). |
 
 ---
 
 ## 2. Deploy på Railway
 
-BetPals använder Railway med **Nixpacks**:
+Whooply använder Railway med **Nixpacks**:
 
-1. **Konfigurationsfil**: [railway.json](file:///Users/sarahsackerud/Documents/antigravity/charming-mendel/betpals/railway.json)
+1. **Konfigurationsfil**: [railway.json](file:///Users/sarahsackerud/Documents/antigravity/charming-mendel/whooply/railway.json)
    - Build-kommando: `npm install --include=dev && npm run build`
    - Start-kommando: `npm start`
    - Hälsokontroll: `GET /api/health` (svarar `{"status":"ok", "database":true}`)
 2. **Persistent Disk (Volym)**:
    - Skapa en volym i Railway: Klicka på tjänsten → **Volumes** → **Add Volume**.
    - Sätt Mount Path till `/data`.
-   - Databasen sparas automatiskt i `/data/betpals.db` och automatiserade säkerhetskopior i `/data/backups/`.
+   - Databasen sparas automatiskt i `/data/whooply.db` och automatiserade säkerhetskopior i `/data/backups/`.
 
 ---
 
@@ -48,7 +48,7 @@ BetPals använder Railway med **Nixpacks**:
 SQLite körs i **WAL-läge (Write-Ahead Logging)** och använder native icke-blockerande säkerhetskopiering (`better-sqlite3` backup API).
 
 ### A. Automatisk backup
-Servern skapar automatiskt en ny säkerhetskopia en gång per dygn och sparar den i `backups/betpals-backup-YYYY-MM-DD-HHmmss.db`. De senaste 7 dagarnas kopior sparas automatiskt, äldre raderas.
+Servern skapar automatiskt en ny säkerhetskopia en gång per dygn och sparar den i `backups/whooply-backup-YYYY-MM-DD-HHmmss.db`. De senaste 7 dagarnas kopior sparas automatiskt, äldre raderas.
 
 ### B. Manuell backup och nedladdning
 1. Logga in i Admin-panelen (`/admin`) med Superadmin-PIN.
@@ -59,12 +59,12 @@ Servern skapar automatiskt en ny säkerhetskopia en gång per dygn och sparar de
 ### C. Återställning från backup
 Om databasen någonsin skulle behöva återställas till en tidigare tidpunkt:
 1. Stoppa tjänsten i Railway (eller pausa deploy).
-2. Ersätt `/data/betpals.db` med den nedladdade backupfilen via Railway CLI eller SSH:
+2. Ersätt `/data/whooply.db` med den nedladdade backupfilen via Railway CLI eller SSH:
    ```bash
    # Ta bort eventuella kvarvarande WAL-filer:
-   rm -f /data/betpals.db-wal /data/betpals.db-shm
+   rm -f /data/whooply.db-wal /data/whooply.db-shm
    # Kopiera in din backup:
-   cp /data/backups/betpals-backup-XXXX.db /data/betpals.db
+   cp /data/backups/whooply-backup-XXXX.db /data/whooply.db
    ```
 3. Starta servern igen.
 
@@ -72,7 +72,7 @@ Om databasen någonsin skulle behöva återställas till en tidigare tidpunkt:
 
 ## 4. Övervakning & Felloggning
 
-BetPals har inbyggd krasch- och felövervakning:
+Whooply har inbyggd krasch- och felövervakning:
 - **Serverhälsa**: `GET /api/health` returnerar serverns drifttid och bekräftar att databasen svarar.
 - **Kraschskydd**: Globala process-guards (`unhandledRejection` och `uncaughtException`) fångar upp oväntade fel så att servern inte kraschar.
 - **Klientfelrapportering**: Om en användares mobilwebbläsare stöter på ett JavaScript-fel skickas det automatiskt till servern och loggas med prefixet `[CLIENT-ERROR]` i Railways loggar.
@@ -116,7 +116,7 @@ Om ni har testbettat och vill nollställa alla saldon och spel inför en riktig 
 
 Följ denna checklista när de 20 kompisarna kör första gången:
 
-- [ ] **Miljövariabel satt**: `BETPALS_INVITE_CODE` är konfigurerad.
+- [ ] **Miljövariabel satt**: `WHOOPLY_INVITE_CODE` är konfigurerad.
 - [ ] **Persistent disk aktiv**: Railway-volym monterad på `/data`.
 - [ ] **Inbjudan**: Dela app-länken och inbjudningskoden till kompisgruppen.
 - [ ] **Registrering**: Låt alla registrera sig med namn, smeknamn, Swish-nummer och 4-siffrig PIN.

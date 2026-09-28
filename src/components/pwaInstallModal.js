@@ -3,7 +3,7 @@ import { showModal, closeModal } from './modal.js';
 import { showToast, launchConfetti } from '../utils.js';
 
 let deferredPrompt = null;
-const DISMISS_KEY = 'betpals_pwa_dismissed_at';
+const DISMISS_KEY = 'whooply_pwa_dismissed_at';
 const COOLDOWN_DAYS = 7;
 
 export function setDeferredPrompt(e) {
@@ -64,9 +64,9 @@ export function showPwaInstallModal({ forced = false } = {}) {
       <div class="pwa-guide-container text-center animate-in">
         <div class="pwa-guide-header mb-md">
           <div class="pwa-app-icon-wrap" style="width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 24px rgba(255, 215, 0, 0.25); border: 2px solid var(--gold);">
-            <img src="/icons/icon-192.png" alt="Malta Betting" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="/icons/icon-192.png" alt="Whooply" style="width: 100%; height: 100%; object-fit: cover;" />
           </div>
-          <h4 style="margin-bottom: 6px; font-weight: 800; color: var(--gold);">Spara Malta Betting på hemskärmen</h4>
+          <h4 style="margin-bottom: 6px; font-weight: 800; color: var(--gold);">Spara Whooply på hemskärmen</h4>
           <p class="text-muted" style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 0;">
             Få fullskärm utan adressfält, blixtsnabb start och stöd för live-notiser!
           </p>
@@ -113,9 +113,9 @@ export function showPwaInstallModal({ forced = false } = {}) {
     bodyHtml = `
       <div class="pwa-guide-container text-center animate-in">
         <div class="pwa-app-icon-wrap" style="width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 24px rgba(255, 215, 0, 0.25); border: 2px solid var(--gold);">
-          <img src="/icons/icon-192.png" alt="Malta Betting" style="width: 100%; height: 100%; object-fit: cover;" />
+          <img src="/icons/icon-192.png" alt="Whooply" style="width: 100%; height: 100%; object-fit: cover;" />
         </div>
-        <h4 style="margin-bottom: 6px; font-weight: 800; color: var(--gold);">Installera Malta Betting</h4>
+        <h4 style="margin-bottom: 6px; font-weight: 800; color: var(--gold);">Installera Whooply</h4>
         <p class="text-muted" style="font-size: 0.85rem; line-height: 1.4; margin-bottom: var(--space-md);">
           Installera appen på din enhet för blixtsnabb åtkomst, helskärm utan webbläsarrader och realtidsnotiser!
         </p>
@@ -141,11 +141,11 @@ export function showPwaInstallModal({ forced = false } = {}) {
     bodyHtml = `
       <div class="pwa-guide-container text-center animate-in">
         <div class="pwa-app-icon-wrap" style="width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 24px rgba(255, 215, 0, 0.25); border: 2px solid var(--gold);">
-          <img src="/icons/icon-192.png" alt="Malta Betting" style="width: 100%; height: 100%; object-fit: cover;" />
+          <img src="/icons/icon-192.png" alt="Whooply" style="width: 100%; height: 100%; object-fit: cover;" />
         </div>
         <h4 style="margin-bottom: 6px; font-weight: 800; color: var(--gold);">Spara appen på telefonen</h4>
         <p class="text-muted" style="font-size: 0.85rem; line-height: 1.4; margin-bottom: var(--space-md);">
-          Lägg till Malta Betting på startskärmen för full app-upplevelse och notiser!
+          Lägg till Whooply på startskärmen för full app-upplevelse och notiser!
         </p>
 
         <div class="pwa-steps-list mb-lg" style="text-align: left; display: flex; flex-direction: column; gap: 10px;">
@@ -171,7 +171,7 @@ export function showPwaInstallModal({ forced = false } = {}) {
     `;
   }
 
-  showModal('📲 Malta Betting App', bodyHtml, () => {
+  showModal('📲 Whooply App', bodyHtml, () => {
     recordPromptDismissed();
   });
 
@@ -199,7 +199,7 @@ export function showPwaInstallModal({ forced = false } = {}) {
       const choice = await promptEvent.userChoice;
       if (choice.outcome === 'accepted') {
         launchConfetti();
-        showToast('Malta Betting installeras på din telefon! 🎉', 'success');
+        showToast('Whooply installeras på din telefon! 🎉', 'success');
         deferredPrompt = null;
       } else {
         recordPromptDismissed();

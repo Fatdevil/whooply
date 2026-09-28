@@ -122,7 +122,7 @@ function goBack() {
 // After a new deploy, a phone that kept the old app open in the background asks for page
 // files that no longer exist. Reload once to get the new version instead of silently
 // staying on the previous page.
-const PAGE_RELOAD_KEY = 'betpals_page_reload_at';
+const PAGE_RELOAD_KEY = 'whooply_page_reload_at';
 
 function reloadForNewVersion() {
   let last = 0;
@@ -268,7 +268,7 @@ function checkFirstRunPushPrompt() {
   if (!isPushSupported() || !isLoggedIn()) return;
   if (Notification.permission !== 'default') return;
 
-  const PUSH_PROMPT_KEY = 'betpals_first_run_push_asked';
+  const PUSH_PROMPT_KEY = 'whooply_first_run_push_asked';
   if (localStorage.getItem(PUSH_PROMPT_KEY)) return;
 
   setTimeout(async () => {

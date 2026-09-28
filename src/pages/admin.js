@@ -11,12 +11,12 @@ import { openFinishEventModal } from '../components/finish-event-modal.js';
 let adminPin = null;
 
 function getPin() {
-  return adminPin || sessionStorage.getItem('betpals_pin');
+  return adminPin || sessionStorage.getItem('whooply_pin');
 }
 
 function savePin(pin) {
   adminPin = pin;
-  sessionStorage.setItem('betpals_pin', pin);
+  sessionStorage.setItem('whooply_pin', pin);
 }
 
 function isSuperAdmin() {
@@ -136,7 +136,7 @@ async function renderAdminDashboard(content, loggedIn, hasPinSession) {
 
   if (hasPinSession) {
     document.getElementById('admin-logout-btn')?.addEventListener('click', () => {
-      sessionStorage.removeItem('betpals_pin');
+      sessionStorage.removeItem('whooply_pin');
       adminPin = null;
       showToast(t('admin.toastSuperLoggedOut'), 'info');
       renderAdmin();
@@ -969,7 +969,7 @@ async function loadAdminUsers(pin) {
         const blobUrl = URL.createObjectURL(await res.blob());
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = match ? match[1] : 'betpals-backup.db';
+        a.download = match ? match[1] : 'whooply-backup.db';
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -1249,7 +1249,7 @@ async function loadAdminBroadcastPushSection() {
               <img src="/icons/icon-192.png" alt="MB" style="width: 100%; height: 100%; object-fit: cover;" />
             </div>
             <div style="flex: 1; font-size: 0.78rem; line-height: 1.35; min-width: 0;">
-              <div id="preview-push-title" style="font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Malta Betting 🇲🇹</div>
+              <div id="preview-push-title" style="font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Whooply 🇲🇹</div>
               <div id="preview-push-body" class="text-muted" style="font-size: 0.75rem; word-break: break-word;">Skriv en text ovan för att förhandsgranska...</div>
             </div>
           </div>
@@ -1269,7 +1269,7 @@ async function loadAdminBroadcastPushSection() {
   const previewBody = document.getElementById('preview-push-body');
 
   titleInput?.addEventListener('input', () => {
-    previewTitle.textContent = titleInput.value.trim() || 'Malta Betting 🇲🇹';
+    previewTitle.textContent = titleInput.value.trim() || 'Whooply 🇲🇹';
   });
 
   bodyInput?.addEventListener('input', () => {
@@ -1301,7 +1301,7 @@ async function loadAdminBroadcastPushSection() {
       launchConfetti();
       showToast(res.message || `Pushnotis skickad till ${res.sentCount || 0} enheter!`, 'success');
       document.getElementById('admin-broadcast-push-form')?.reset();
-      previewTitle.textContent = 'Malta Betting 🇲🇹';
+      previewTitle.textContent = 'Whooply 🇲🇹';
       previewBody.textContent = 'Skriv en text ovan för att förhandsgranska...';
 
       // Refresh count

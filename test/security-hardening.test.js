@@ -172,7 +172,7 @@ test('Operations: db.backupDatabase creates a valid, readable SQLite backup', as
   const path = await import('path');
   const Database = (await import('better-sqlite3')).default;
 
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'betpals-test-backup-'));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'whooply-test-backup-'));
   const backup = await db.backupDatabase(tmpDir);
 
   assert.ok(backup, 'Backup result should exist');

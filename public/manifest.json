@@ -1,13 +1,13 @@
 {
   "id": "/",
-  "name": "Malta Betting",
-  "short_name": "Malta Betting",
+  "name": "Whooply",
+  "short_name": "Whooply",
   "description": "Social betting app — skapa events, sätt odds och betta med vänner!",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#07070e",
-  "theme_color": "#07070e",
+  "background_color": "#4a1a8a",
+  "theme_color": "#4a1a8a",
   "orientation": "portrait",
   "icons": [
     {

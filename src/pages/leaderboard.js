@@ -315,7 +315,7 @@ function renderOverviewTab(container, overview, user, overviewError = false, act
   };
 
   // The only place that builds Swish links
-  const swishUrlFor = (f, amount) => f.friendSwish ? createSwishUrl({ phone: f.friendSwish, amount, message: 'Malta Betting' }) : '#';
+  const swishUrlFor = (f, amount) => f.friendSwish ? createSwishUrl({ phone: f.friendSwish, amount, message: 'Whooply' }) : '#';
 
   const oweCard = (f) => {
     const name = f.friendName || f.friendNickname || '';
@@ -430,9 +430,9 @@ function renderOverviewTab(container, overview, user, overviewError = false, act
       const myPhone = user.swishNumber || user.phone || '';
       const phoneNote = myPhone ? (isEn ? ` to ${myPhone}` : ` till ${myPhone}`) : '';
       const text = isEn
-        ? `Hey ${name}! Friendly reminder to Swish ${amount} kr${phoneNote} for our Malta Betting games 📱🤝`
-        : `Tjena ${name}! Vänlig påminnelse att swisha ${amount} kr${phoneNote} för våra spel i Malta Betting 📱🤝`;
-      shareText(text, 'Malta Betting');
+        ? `Hey ${name}! Friendly reminder to Swish ${amount} kr${phoneNote} for our Whooply games 📱🤝`
+        : `Tjena ${name}! Vänlig påminnelse att swisha ${amount} kr${phoneNote} för våra spel i Whooply 📱🤝`;
+      shareText(text, 'Whooply');
     });
   });
 
@@ -471,7 +471,7 @@ async function renderTournamentTab(container, activeTournaments, user) {
     container.innerHTML = `
       <div class="empty-state card text-center" style="padding: var(--space-xl) var(--space-md);">
         <div style="display: flex; justify-content: center; margin-bottom: var(--space-md);">
-          <img src="/malta-chips-gold.png" alt="Malta Betting" class="animate-in" style="width: 140px; max-width: 60vw; height: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 16px rgba(255, 215, 0, 0.25));" />
+          <img src="/malta-chips-gold.png" alt="Whooply" class="animate-in" style="width: 140px; max-width: 60vw; height: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7)) drop-shadow(0 0 16px rgba(255, 215, 0, 0.25));" />
         </div>
         <h3 class="font-heading" style="color: var(--gold); margin-bottom: 6px;">${t('tab.noActiveTournaments')}</h3>
         <p class="text-muted" style="font-size: 0.85rem; max-width: 360px; margin: 0 auto var(--space-md);">
@@ -839,8 +839,8 @@ async function renderTournamentTab(container, activeTournaments, user) {
       const fromName = btn.getAttribute('data-from');
       const amount = btn.getAttribute('data-amount');
       const text = isEn 
-        ? `Hey ${fromName}! Friendly reminder to settle ${amount} kr for ${tour.name} on Malta Betting 📱🤝`
-        : `Tjena ${fromName}! Vänlig påminnelse att swisha ${amount} kr för ${tour.name} på Malta Betting 📱🤝`;
+        ? `Hey ${fromName}! Friendly reminder to settle ${amount} kr for ${tour.name} on Whooply 📱🤝`
+        : `Tjena ${fromName}! Vänlig påminnelse att swisha ${amount} kr för ${tour.name} på Whooply 📱🤝`;
 
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
@@ -1045,8 +1045,8 @@ function renderHistoryTab(container, pastTournaments, user = null, openTournamen
             const amount = remindBtn.getAttribute('data-amount');
             const tourName = remindBtn.getAttribute('data-tour-name');
             const text = isEn
-              ? `Hey ${fromName}! Friendly reminder to settle ${amount} kr for ${tourName} on Malta Betting 📱🤝`
-              : `Tjena ${fromName}! Vänlig påminnelse att swisha ${amount} kr för ${tourName} på Malta Betting 📱🤝`;
+              ? `Hey ${fromName}! Friendly reminder to settle ${amount} kr for ${tourName} on Whooply 📱🤝`
+              : `Tjena ${fromName}! Vänlig påminnelse att swisha ${amount} kr för ${tourName} på Whooply 📱🤝`;
 
             if (navigator.clipboard) {
               navigator.clipboard.writeText(text).then(() => {

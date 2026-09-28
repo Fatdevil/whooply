@@ -184,7 +184,7 @@ test('Finding 4 — Swish URL safety and empty phone fallback handling', () => {
     if (phone && phone.trim().length > 0) {
       return {
         showButton: true,
-        href: createSwishUrl({ phone, amount: stake, message: `BetPals Gimme (${winner} won)` }),
+        href: createSwishUrl({ phone, amount: stake, message: `Whooply Gimme (${winner} won)` }),
         showFallback: false
       };
     }
@@ -248,11 +248,11 @@ test('Finding 8 — English localization generates proper English strings across
   const generateVerdictShareText = ({ isApproved, isEn, customGimmeCm, activeBet }) => {
     let text = isApproved 
       ? (isEn 
-          ? `⛳️ BetPals Gimme Referee: Ball is APPROVED as Gimme (< ${customGimmeCm} cm)! 🏆\nPick up the ball!`
-          : `⛳️ BetPals Gimme Domare: Bollen är GODKÄND som Gimme (< ${customGimmeCm} cm)! 🏆\nPlocka upp bollen!`)
+          ? `⛳️ Whooply Gimme Referee: Ball is APPROVED as Gimme (< ${customGimmeCm} cm)! 🏆\nPick up the ball!`
+          : `⛳️ Whooply Gimme Domare: Bollen är GODKÄND som Gimme (< ${customGimmeCm} cm)! 🏆\nPlocka upp bollen!`)
       : (isEn
-          ? `⛳️ BetPals Gimme Referee: NOT A GIMME (> ${customGimmeCm} cm)! 😈\nPutt it, coward!`
-          : `⛳️ BetPals Gimme Domare: ICKE GODKÄND Gimme (> ${customGimmeCm} cm)! 😈\nPutta din fegis!`);
+          ? `⛳️ Whooply Gimme Referee: NOT A GIMME (> ${customGimmeCm} cm)! 😈\nPutt it, coward!`
+          : `⛳️ Whooply Gimme Domare: ICKE GODKÄND Gimme (> ${customGimmeCm} cm)! 😈\nPutta din fegis!`);
     
     if (activeBet) {
       const winner = isApproved ? activeBet.p1 : activeBet.p2;
@@ -271,7 +271,7 @@ test('Finding 8 — English localization generates proper English strings across
   const bet = { mode: 'swish', stake: 50, p1: 'Alice', p2: 'Bob' };
 
   const enApproved = generateVerdictShareText({ isApproved: true, isEn: true, customGimmeCm: 60, activeBet: bet });
-  assert.ok(enApproved.includes('BetPals Gimme Referee: Ball is APPROVED as Gimme'));
+  assert.ok(enApproved.includes('Whooply Gimme Referee: Ball is APPROVED as Gimme'));
   assert.ok(enApproved.includes('BET RESULT: Alice won 100 kr!'));
   assert.ok(!enApproved.includes('GODKÄND'));
   assert.ok(!enApproved.includes('RESULTAT'));
