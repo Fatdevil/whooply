@@ -65,6 +65,122 @@
   --navbar-height: 72px;
 }
 
+/* ── Light Theme ───────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary: #f5f5f7;
+  --bg-secondary: #ebebef;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(245, 245, 247, 0.95);
+  --bg-glass: rgba(0, 0, 0, 0.03);
+  --bg-surface: #ffffff;
+  --bg-input: rgba(0, 0, 0, 0.05);
+  --border-glass: rgba(0, 0, 0, 0.08);
+  --border-glass-hover: rgba(0, 0, 0, 0.15);
+
+  --text-primary: #1a1a2e;
+  --text-secondary: #555577;
+  --text-muted: #8888a0;
+}
+
+/* Light theme: invert the subtle background glow */
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 10%, rgba(139, 92, 246, 0.04), transparent),
+    radial-gradient(ellipse 500px 500px at 80% 80%, rgba(249, 115, 22, 0.03), transparent);
+}
+
+/* Light theme: top header & navbar adjustments */
+[data-theme="light"] .top-header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .top-header-logo {
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .nav-item {
+  color: #8888a0;
+}
+
+[data-theme="light"] .nav-item.active {
+  color: var(--accent);
+}
+
+/* Light theme: cards, modals, inputs */
+[data-theme="light"] .card,
+[data-theme="light"] .prof-list {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .modal-content {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: rgba(0, 0, 0, 0.04);
+  color: #1a1a2e;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #8888a0;
+}
+
+/* Light theme: buttons */
+[data-theme="light"] .btn-secondary {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.10);
+}
+
+/* Light theme: profile rows */
+[data-theme="light"] .prof-row {
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .prof-section {
+  color: #555577;
+}
+
+/* Light theme: toast */
+[data-theme="light"] .toast {
+  background: #1a1a2e;
+  color: #f5f5f7;
+}
+
+/* Light theme: SVG icons in navbar */
+[data-theme="light"] .top-header-qr-btn,
+[data-theme="light"] .top-header-back-btn {
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .bell-btn {
+  color: #1a1a2e;
+}
+
 /* ── Reset ──────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -179,6 +295,73 @@ body::before {
   transition: all 0.2s var(--ease-out);
   padding: 0;
   flex-shrink: 0;
+}
+
+/* Theme toggle button (sun/moon) */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  flex-shrink: 0;
+  transition: all 0.2s var(--ease-out);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-glass-hover);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.92);
+}
+
+[data-theme="light"] .theme-toggle-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.10);
+}
+
+/* Accent color picker (profile settings) */
+.accent-picker {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+}
+
+.accent-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.accent-dot:hover {
+  transform: scale(1.15);
+}
+
+.accent-dot.active {
+  border-color: var(--text-primary);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px var(--accent-glow);
 }
 
 /* Back on sub pages: a big, obvious target in the corner people reach for */
