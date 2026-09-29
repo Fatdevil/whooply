@@ -10,6 +10,10 @@ import { initMaltaSupportWidget } from './components/maltaSupport.js';
 import { setDeferredPrompt, isAppStandalone, shouldShowAutoPrompt, showPwaInstallModal } from './components/pwaInstallModal.js';
 import { isPushSupported, subscribeToPush, syncPushSubscription } from './push.js';
 import { resetBack, interceptBack, getBackParent } from './backNav.js';
+import { initTheme } from './theme.js';
+
+// ── Apply saved theme immediately (before first render) ──
+initTheme();
 
 // ── Global Client Error Reporting ─────────────────────
 let reportedErrorsCount = 0;

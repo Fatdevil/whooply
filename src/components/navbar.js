@@ -2,6 +2,7 @@
 import { isLoggedIn, getStoredUser } from '../auth.js';
 import { renderBell, initBellListeners } from './notifications.js';
 import { t, getLang, setLang } from '../i18n.js';
+import { getTheme, toggleTheme } from '../theme.js';
 
 // Navigation icons
 const icons = {
@@ -46,6 +47,12 @@ export function renderNavbar(activePage) {
     bindOnce('top-header-back-btn', requestBack);
     bindOnce('top-header-qr-btn', () => openAppQrModal());
     bindOnce('top-header-logo-btn', () => openAppQrModal());
+    bindOnce('theme-toggle-btn', () => {
+      toggleTheme();
+      // Update the icon immediately
+      const btn = document.getElementById('theme-toggle-btn');
+      if (btn) btn.textContent = getTheme() === 'dark' ? '☀️' : '🌙';
+    });
   }, 0);
 
   return `
@@ -74,6 +81,9 @@ export function renderNavbar(activePage) {
         <span class="top-header-logo" id="top-header-logo-btn" title="${currentLang === 'sv' ? 'Dela app / QR-kod 📱' : 'Share app / QR code 📱'}">WHOOPLY</span>
       </div>
       <div class="top-header-right">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="${currentLang === 'sv' ? 'Byt tema' : 'Toggle theme'}" title="${currentLang === 'sv' ? 'Ljust/mörkt läge' : 'Light/dark mode'}">
+          ${getTheme() === 'dark' ? '☀️' : '🌙'}
+        </button>
         ${renderBell()}
       </div>
     </div>

@@ -11,6 +11,7 @@ import { compressImage } from '../imageUtils.js';
 import { openBlind10Modal, openMafiaModal, openSpaceInvadersModal } from '../components/minigames.js';
 import { openMaltaSupportModal, isMaltaFabDisabled, setMaltaFabDisabled } from '../components/maltaSupport.js';
 import { isAppStandalone, isIosDevice, showPwaInstallModal } from '../components/pwaInstallModal.js';
+import { getTheme, setTheme, getAccent, setAccent, ACCENT_COLORS } from '../theme.js';
 
 const EMPTY_STATS = { totalBets: 0, finishedBets: 0, wins: 0, losses: 0, pending: 0, winRate: 0, totalBet: 0, totalWon: 0, totalLost: 0, netProfit: 0, streak: 0, streakType: 'none' };
 
@@ -611,6 +612,10 @@ function renderProfileContent(content, user, bets, stats = EMPTY_STATS, creds, f
         <button type="button" class="prof-row" id="row-language">
           <div>🌍 ${t('profile.language')}</div><span class="prof-value">${escapeHtml(langLabel)} ›</span>
         </button>
+        <button type="button" class="prof-row" id="row-appearance">
+          <div>🎨 ${isEn ? 'Appearance' : 'Utseende'}<small>${isEn ? 'Theme and accent color' : 'Tema och accentfärg'}</small></div>
+          <span class="prof-chev">›</span>
+        </button>
       </div>
 
       <button type="button" class="prof-logout" id="logout-btn">${t('profile.logout')}</button>
@@ -730,6 +735,51 @@ function renderProfileContent(content, user, bets, stats = EMPTY_STATS, creds, f
   document.getElementById('row-pin')?.addEventListener('click', openChangePinSheet);
   document.getElementById('row-support')?.addEventListener('click', openSupportSheet);
   document.getElementById('row-language')?.addEventListener('click', openLanguageSheet);
+  document.getElementById('row-appearance')?.addEventListener('click', openAppearanceSheet);
+}
+
+function openAppearanceSheet() {
+  const isEn = getLang() === 'en';
+  const currentTheme = getTheme();
+  const currentAccent = getAccent();
+
+  const accentDots = ACCENT_COLORS.map(a =>
+    `<button type="button" class="accent-dot ${a.id === currentAccent ? 'active' : ''}" data-accent="${a.id}" style="background: ${a.color};" title="${a.id}">${a.id === currentAccent ? '✓' : ''}</button>`
+  ).join('');
+
+  showModal(`🎨 ${isEn ? 'Appearance' : 'Utseende'}`, `
+    <div class="prof-list" style="margin-bottom: 16px;">
+      <button type="button" class="prof-row" id="appearance-theme-toggle">
+        <div>${currentTheme === 'dark' ? '🌙' : '☀️'} ${isEn ? 'Theme' : 'Tema'}<small>${currentTheme === 'dark' ? (isEn ? 'Dark mode' : 'Mörkt läge') : (isEn ? 'Light mode' : 'Ljust läge')}</small></div>
+        <span class="prof-pill ${currentTheme === 'dark' ? 'on' : 'warn'}">${currentTheme === 'dark' ? (isEn ? 'Dark' : 'Mörkt') : (isEn ? 'Light' : 'Ljust')}</span>
+      </button>
+    </div>
+    <div style="margin-bottom: 8px; font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 0 4px;">
+      ${isEn ? 'Accent color' : 'Accentfärg'}
+    </div>
+    <div class="accent-picker">
+      ${accentDots}
+    </div>
+  `);
+
+  // Theme toggle
+  document.getElementById('appearance-theme-toggle')?.addEventListener('click', () => {
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    const btn = document.getElementById('theme-toggle-btn');
+    if (btn) btn.textContent = getTheme() === 'dark' ? '☀️' : '🌙';
+    closeModal();
+    openAppearanceSheet(); // Reopen with updated state
+  });
+
+  // Accent color dots
+  document.querySelectorAll('.accent-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const id = dot.dataset.accent;
+      setAccent(id);
+      closeModal();
+      openAppearanceSheet(); // Reopen with updated state
+    });
+  });
 }
 
 function groupPhotoAlbums(photos) {
